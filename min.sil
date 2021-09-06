@@ -1,0 +1,7 @@
+\begin[papersize=28pt x 28pt]{document}
+\neverindent\nofolios
+\script[src=packages/svg]
+\svg[width=10pt, src=box.svg]
+
+\svg[width=10pt, src=box2.svg]
+\end{document}

@@ -1,0 +1,62 @@
+\documentclass{standalone}
+\usepackage{fontspec}
+\usepackage[table]{xcolor}
+\usepackage{stackengine}
+\begin{document}
+\newfontfamily\oki[Path=fonts/, Scale=2]{FKOkinawanMP.ttf}
+\newfontfamily\nim[Scale=0.5]{Nimbus Sans}
+\setmainfont{EB Garamond}
+\newcommand{\centered}[1]{\begin{tabular}{l} #1 \end{tabular}}
+\begin{tabular}{c|c|c|}
+& 1AFD & 1AFE \\
+\hline
+& & \\
+0 & \shortstack{\oki{婢}\\\nim{1AFD0}} & \shortstack{\oki{敖}\\\nim{1AFE0}} \\
+\hline
+& & \\
+1 & \shortstack{\oki{嬨}\\\nim{1AFD1}} & \shortstack{\oki{晴}\\\nim{1AFE1}} \\
+\hline
+& & \\
+2 & \shortstack{\oki{廒}\\\nim{1AFD2}} & \shortstack{\oki{朗}\\\nim{1AFE2}} \\
+\hline
+& & \\
+3 & \shortstack{\oki{廙}\\\nim{1AFD3}} & \shortstack{\oki{望}\\\nim{1AFE3}} \\
+\hline
+& & \\
+4 & \shortstack{\oki{彩}\\\nim{1AFD4}} & \shortstack{\oki{歹}\\\nim{1AFE4}} \\
+\hline
+& & \cellcolor{cyan!30} \\
+5 & \shortstack{\oki{徭}\\\nim{1AFD5}} & \cellcolor{cyan!30}\shortstack{\oki{流}\\\nim{1AFE5}} \\
+\hline
+& & \cellcolor{cyan!30} \\
+6 & \shortstack{\oki{惘}\\\nim{1AFD6}} & \cellcolor{cyan!30}\shortstack{\oki{滛}\\\nim{1AFE6}} \\
+\hline
+& & \cellcolor{cyan!30} \\
+7 & \shortstack{\oki{慎}\\\nim{1AFD7}} & \cellcolor{cyan!30}\shortstack{\oki{滋}\\\nim{1AFE7}} \\
+\hline
+& & \cellcolor{cyan!30} \\
+8 & \shortstack{\oki{愈}\\\nim{1AFD8}} & \cellcolor{cyan!30}\shortstack{\oki{漢}\\\nim{1AFE8}} \\
+\hline
+& & \cellcolor{red!30} \\
+9 & \shortstack{\oki{憎}\\\nim{1AFD9}} & \cellcolor{red!30}\shortstack{\oki{杖}\\\nim{1AFE9}} \\
+\hline
+& & \cellcolor{red!30} \\
+A & \shortstack{\oki{慠}\\\nim{1AFDC}} & \cellcolor{red!30}\shortstack{\oki{殺}\\\nim{1AFEA}} \\
+\hline
+& & \cellcolor{black!30} \\
+B & \shortstack{\oki{懲}\\\nim{1AFDD}} & \cellcolor{black!30} \\
+\hline
+& & \cellcolor{black!30} \\
+C & \shortstack{\oki{戴}\\\nim{1AFDE}} & \cellcolor{black!30} \\
+\hline
+& & \cellcolor{black!30} \\
+D & \shortstack{\oki{揄}\\\nim{1AFDF}} & \cellcolor{black!30} \\
+\hline
+& & \cellcolor{black!30} \\
+E & \shortstack{\oki{搜}\\\nim{1AFDF}} & \cellcolor{black!30} \\
+\hline
+& & \cellcolor{black!30} \\
+F & \shortstack{\oki{摒}\\\nim{1AFDF}} & \cellcolor{black!30} \\
+\hline
+\end{tabular}
+\end{document}
