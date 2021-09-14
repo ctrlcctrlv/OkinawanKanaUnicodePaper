@@ -1,14 +1,16 @@
+local pdf = require("justenoughlibtexpdf")
+--local stretch = require("packages/stretch")
 -- Japaneese language support defines units which are useful here
 SILE.languageSupport.loadLanguage("ja")
 
 SILE.registerCommand("rubyA:font", function (_, _)
-  SILE.call("font", { size = "0.6zw", weight = 800 })
+  SILE.call("font", { filename="fonts/FKOkinawanMP.ttf", size = "0.6em", weight = 800 })
 end)
 
 SILE.settings.declare({
     parameter = "rubyA.height",
-    type = "measurement",
-    default = SILE.measurement("1zw"),
+    type = "string",
+    default = "2zw",
     help = "Vertical offset between the rubyA and the main text"
   })
 
@@ -26,19 +28,19 @@ end
 
 local checkIfSpacerNeeded = function (reading)
   -- First, did we have a rubyA node at all?
-  if not SILE.scratch.lastRubyBox then return end
+  if not SILE.scratch.lastRubyABox then return end
   -- Does the current reading start with a latin?
   if not isLatin(SU.codepoint(SU.firstChar(reading))) then return end
   -- Did we have some nodes recently?
   local top = #SILE.typesetter.state.nodes
   if top < 2 then return end
   -- Have we had other stuff since the last rubyA node?
-  if SILE.typesetter.state.nodes[top] ~= SILE.scratch.lastRubyBox
-     and SILE.typesetter.state.nodes[top-1] ~= SILE.scratch.lastRubyBox then
+  if SILE.typesetter.state.nodes[top] ~= SILE.scratch.lastRubyABox
+     and SILE.typesetter.state.nodes[top-1] ~= SILE.scratch.lastRubyABox then
     return
   end
   -- Does the previous reading end with a latin?
-  if not isLatin(SU.codepoint(SU.lastChar(SILE.scratch.lastRubyText))) then return end
+  if not isLatin(SU.codepoint(SU.lastChar(SILE.scratch.lastRubyAText))) then return end
   -- OK, we need a spacer!
   SILE.typesetter:pushGlue(SILE.settings.get("rubyA.latinspacer"))
 end
@@ -49,49 +51,69 @@ SILE.registerCommand("rubyA", function (options, content)
 
   checkIfSpacerNeeded(reading)
 
-  SILE.call("hbox", {}, function ()
+  -- measure rubyA
+  rubyAbox_c = function ()
     SILE.settings.temporarily(function ()
       SILE.call("noindent")
       SILE.call("rubyA:font")
       SILE.typesetter:typeset(reading)
     end)
-  end)
+  end
+  SILE.call("hbox", {}, rubyAbox_c)
   local rubyAbox = SILE.typesetter.state.nodes[#SILE.typesetter.state.nodes]
-  rubyAbox.outputYourself = function (self, typesetter, line)
+  SU.debug("rubyA", "OO", rubyAbox.outputYourself)
+
+  local rubyA_lc = rubyAbox:lineContribution()
+
+  -- measure the content
+  SILE.call("hbox", {}, content)
+  local cbox = SILE.typesetter.state.nodes[#SILE.typesetter.state.nodes]
+  local content_lc = cbox:lineContribution()
+  SU.debug("rubyA", "base box is " .. cbox)
+  SU.debug("rubyA", "reading is  " .. rubyAbox)
+  -- define rubyAbox output rules
+  rubyAbox_outputYourself = function(ratio) return function (self, typesetter, line)
     local ox = typesetter.frame.state.cursorX
     local oy = typesetter.frame.state.cursorY
     typesetter.frame:advanceWritingDirection(rubyAbox.width)
-    typesetter.frame:advancePageDirection(-SILE.settings.get("rubyA.height"))
+    typesetter.frame:advancePageDirection(-SILE.measurement(SILE.settings.get("rubyA.height")))
     SILE.outputter:setCursor(typesetter.frame.state.cursorX, typesetter.frame.state.cursorY)
+    SU.debug("rubyA", self.value[1])
+    local sx = ratio
+    local sy = 1.0
+    pdf:gsave()
+    local horigin = (typesetter.frame.state.cursorX):tonumber()
+    local vorigin = (typesetter.frame.state.cursorY):tonumber()
+    pdf.setmatrix(1, 0, 0, 1, horigin, vorigin)
+    pdf.setmatrix(sx, 0, 0, sy, 0, 0)
+    pdf.setmatrix(1, 0, 0, 1, -horigin, -vorigin)
     for i = 1, #(self.value) do
       local node = self.value[i]
       node:outputYourself(typesetter, line)
     end
+    pdf:grestore()
     typesetter.frame.state.cursorX = ox
     typesetter.frame.state.cursorY = oy
-  end
-  -- measure the content
-  SILE.call("hbox", {}, content)
-  local cbox = SILE.typesetter.state.nodes[#SILE.typesetter.state.nodes]
-  SU.debug("rubyA", "base box is " .. cbox)
-  SU.debug("rubyA", "reading is  " .. rubyAbox)
-  cbox.height = (rubyAbox.height*1.5) + cbox.height
-  if cbox:lineContribution() > rubyAbox:lineContribution() then
+  end end
+  if content_lc > rubyA_lc then
     SU.debug("rubyA", "Base is longer, offsetting rubyA to fit")
     -- This is actually the offset against the base
     rubyAbox.width = SILE.length(cbox:lineContribution() - rubyAbox:lineContribution())/2
+    local ratio = 1.0
+    rubyAbox.outputYourself = rubyAbox_outputYourself(ratio)
   else
-    local diff = rubyAbox:lineContribution() - cbox:lineContribution()
-    local to_insert = SILE.length(diff / 2)
-    SU.debug("rubyA", "Ruby is longer, inserting " .. to_insert .. " either side of base")
-    cbox.width = rubyAbox:lineContribution()
+    local diff = rubyA_lc - content_lc
+    SU.debug("rubyA", "RubyA is longer, inserting " .. to_insert .. " either side of base")
+    -- SU.debug("frames", "CBOX LC", cbox:lineContribution(), rubyAbox:lineContribution())
+    local ratio = content_lc:absolute():tonumber() / rubyA_lc:absolute():tonumber()
+    rubyAbox.outputYourself = rubyAbox_outputYourself(ratio)
+    --SILE.call("hbox", {}, rubyAbox_c)
+    --cbox.width = rubyAbox:lineContribution()
+    rubyAbox.height = 0
     rubyAbox.width = 0
-    -- add spaces at beginning and end
-    table.insert(cbox.value, 1, SILE.nodefactory.glue(to_insert))
-    table.insert(cbox.value, SILE.nodefactory.glue(to_insert))
   end
-  SILE.scratch.lastRubyBox = rubyAbox
-  SILE.scratch.lastRubyText = reading
+  SILE.scratch.lastRubyABox = rubyAbox
+  SILE.scratch.lastRubyAText = reading
 end)
 
 return {

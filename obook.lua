@@ -40,7 +40,7 @@ function book:init ()
       firstContentFrame = self.firstContentFrame,
       frames = self.defaultFrameset
     })
-  self:loadPackage("twoside", { oddPageMaster = "right", evenPageMaster = "left" })
+  --self:loadPackage("twoside", { oddPageMaster = "right", evenPageMaster = "left" })
   self:loadPackage("tableofcontents")
   if not SILE.scratch.headers then SILE.scratch.headers = {} end
   self:loadPackage("footnotes", {
@@ -51,7 +51,6 @@ function book:init ()
 end
 
 book.newPage = function (self)
-  self:switchPage()
   self:newPageInfo()
   return plain.newPage(self)
 end
@@ -64,25 +63,6 @@ end
 
 book.endPage = function (self)
   self:moveTocNodes()
-  if (self:oddPage() and SILE.scratch.headers.right) then
-    SILE.typesetNaturally(SILE.getFrame("runningHead"), function ()
-      SILE.settings.set("current.parindent", SILE.nodefactory.glue())
-      SILE.settings.set("document.lskip", SILE.nodefactory.glue())
-      SILE.settings.set("document.rskip", SILE.nodefactory.glue())
-      -- SILE.settings.set("typesetter.parfillskip", SILE.nodefactory.glue())
-      SILE.process(SILE.scratch.headers.right)
-      SILE.call("par")
-    end)
-  elseif (not(self:oddPage()) and SILE.scratch.headers.left) then
-      SILE.typesetNaturally(SILE.getFrame("runningHead"), function ()
-        SILE.settings.set("current.parindent", SILE.nodefactory.glue())
-        SILE.settings.set("document.lskip", SILE.nodefactory.glue())
-        SILE.settings.set("document.rskip", SILE.nodefactory.glue())
-          -- SILE.settings.set("typesetter.parfillskip", SILE.nodefactory.glue())
-        SILE.process(SILE.scratch.headers.left)
-        SILE.call("par")
-      end)
-  end
   return plain.endPage(self)
 end
 
@@ -134,8 +114,10 @@ end
 
 SILE.registerCommand("chapter", function (options, content)
   -- open-double-page
-  SILE.typesetter:leaveHmode()
-  SILE.call("supereject")
+  if SILE.typesetter.state.previousVbox then
+    SILE.typesetter:leaveHmode()
+    SILE.call("eject")
+  end
   -- end
   SILE.call("noindent")
   SILE.scratch.headers.right = nil
@@ -161,7 +143,7 @@ SILE.registerCommand("chapter", function (options, content)
 end, "Begin a new chapter")
 
 SILE.registerCommand("section", function (options, content)
-  SILE.typesetter:leaveHmode()
+  --SILE.typesetter:leaveHmode()
   SILE.call("goodbreak")
   SILE.call("bigskip")
   SILE.call("noindent")
