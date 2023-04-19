@@ -1,13 +1,17 @@
-\begin[class=obook]{document}
+\begin[class=book]{document}
 \script[src=lists]
-\script[src=packages/tableofcontents]
 \script[src=packages/rules]
 \script[src=packages/url]
 \script[src=packages/color]
 \script[src=highlight]
 \script[src=packages/date]
 \script{
-SILE.require("packages/simpletable")
+SILE.use("packages/simpletable", {
+ tableTag = "table",
+ trTag = "tr",
+ tdTag = "td"
+})
+
 SILE.registerCommand('Href', function(options, content)
     SILE.call("color", {color="#000099"}, function() SILE.call("href", options, content) end)
 end)
@@ -23,7 +27,6 @@ end)
 \script[src=packages/tate]
 \script[src=packages/rebox]
 \script[src=packages/ruby]
-\script[src=rubyA]
 \define[command=ruby:font]{\font[family=Noto Serif CJK JP,weight=900,size=0.5em]}
 \script[src=packages/linespacing]
 \script[src=packages/pullquote]
@@ -32,6 +35,7 @@ end)
 \script[src=packages/svg]
 \script[src=packages/image]
 \script[src=packages/raiselower]
+\script[src=packages/tableofcontents]
 \define[command=Figure:counter]{\increment-counter[id=figure]\show-counter[id=figure]}
 \language[main=en]
 \define[command=cjk]{\font[size=0.95em,family=Noto Serif CJK JP]{\process}}
@@ -81,7 +85,9 @@ end)
 }
 \typeset-into[frame=folio]{\hfill\font[size=0.45em]{\cjk{提案書発生日：\date[locale=ja_JP.utf-8]}}}
 \define[command=Oki]{\font[filename=fonts/FKOkinawanMP.ttf, size=0.95em]{\process}}
-\nofolios\par\eject
+\nofolios\par
+
+\eject
 
 \add-font-feature[Letters=SmallCaps]
 \par\noindent\center{\begin[size=24pt,weight=1000]{font}Acknowledgements\end{font}}
@@ -101,18 +107,19 @@ end)
 }\medskip
 
 
-\noindent\par{}Daisuke Miura (\cjk{\rubyA[reading=み]{三}\rubyA[reading=うら]{浦}\rubyA[reading=だい]{大}\rubyA[reading=すけ]{介}}), World Special-Characters Wiki (\Oki{世界の特殊文字ウィキ})
+\noindent\par{}Daisuke Miura (\cjk{\ruby[reading=み]{三}\ruby[reading=うら]{浦}\ruby[reading=だい]{大}\ruby[reading=すけ]{介}}), World Special-Characters Wiki (\Oki{世界の特殊文字ウィキ})
 \font[size=10pt]{
 \par{}For many helpful recommendations on standardized glyph names.
 }\medskip
 
-\noindent\par{}Yoshiaki Funatsu (\cjk{\rubyA[reading=ふな]{船}\rubyA[reading=つ]{津} \rubyA[reading=よし]{好}\rubyA[reading=あき]{明}}), Meisei University (\cjk{\rubyA[reading=めい]{明}\rubyA[reading=せい]{星}\rubyA[reading=だいがく]{大学}}), originator of these characters
+\noindent\par{}Yoshiaki Funatsu (\cjk{\ruby[reading=ふな]{船}\ruby[reading=つ]{津} \ruby[reading=よし]{好}\ruby[reading=あき]{明}}), Meisei University (\cjk{\ruby[reading=めい]{明}\ruby[reading=せい]{星}\ruby[reading=だいがく]{大学}}), originator of these characters
 \font[size=10pt]{
 \par{}In order to avoid the appearance of impropriety, I didn't attempt to contact Dr. Funatsu before this submission. However, I do find it proper to acknowledge his careful online archival of many of the sourcess concerning his script, especially mentions in Japanese media. Without that I couldn't have come up with the requisite evidence.
 }\medskip
 
-\eject\tableofcontents
-\define[command=book:chapter:post]{\par}
+\eject
+
+\tableofcontents
 \chapter{Quick summary}
 
 I propose the encoding of 27 new hiragana letters, to be added to a new block, Kana Extended-C. There are no katakana versions of these letters. I only have evidence of the proposed letters in use to write the Central Okinawan language (\cjk{沖縄口}, \cjk{うちなあぐち}, [ʔut͡ɕinaːɡut͡ɕi]), although they may be used to write other languages in the Ryukyuan language family. These letters are known collectively in Japanese as the “New Okinawan Kana” (\cjk{新沖縄文字}); 23 of them have existed since 1986, with the remaining four having been created c. 2004. All 27 are the creation of Dr. Yoshiaki Funatsu (\cjk{船津好明}; born 1936), a professor of statistics, applied mathematics and economics; he later in life became a linguist.
@@ -157,8 +164,8 @@ I propose that the block Kana Extended-C be two columns wide, beginning at U+1AF
 
 \section{Chart}
 
-\eject
 \noindent\svg[src=oki2.svg, height=100%fh]
+\eject
 
 \frame[id=descs, top=top(content), left=25%pw, bottom=bottom(content), right=right(content)]
 \typeset-into[frame=descs]{
@@ -238,16 +245,16 @@ I propose that the block Kana Extended-C be two columns wide, beginning at U+1AF
 
 \chapter{Overview}
 
-Central Okinawan (hereon Okinawan) is the most widely spoken and studied language in the family of Ryukyuan languages, which are Japonic languages spoken in Okinawa and Kagoshima Prefectures\break(\cjk{\rubyA[reading=うちなーちん]{沖縄県}}\Oki{婢}\cjk{\rubyA[reading=か]{鹿}\rubyA[reading=ご]{児}\rubyA[reading=しま]{島}\rubyA[reading=ちん]{県}}), which are the modern day territories consisting of the land which used to belong to the ancient independent Ryūkyū Kingdom (\cjk{\rubyA[reading=るー]{琉}\rubyA[reading=ちゅー]{球}\rubyA[reading=くく]{國}}) (1429–1609). Despite being a vassal state of the Empire of Japan from 1609 onwards, the kingdom had a degree of independence and the Okinawan language continued to be the language of administration until the late 19th century, when Emperor Meiji decided to more thoroughly integrate the islands into the Japanese mainland. The Okinawan language was banned and was practically invisible in public life by 1945, but with the end of World War II, saw a resurgence, though declined in prominence by the end of the 21ˢᵗ century.
+Central Okinawan (hereon Okinawan) is the most widely spoken and studied language in the family of Ryukyuan languages, which are Japonic languages spoken in Okinawa and Kagoshima Prefectures\break(\cjk{\ruby[reading=うちなーちん]{沖縄県}}\Oki{婢}\cjk{\ruby[reading=か]{鹿}\ruby[reading=ご]{児}\ruby[reading=しま]{島}\ruby[reading=ちん]{県}}), which are the modern day territories consisting of the land which used to belong to the ancient independent Ryūkyū Kingdom (\cjk{\ruby[reading=るー]{琉}\ruby[reading=ちゅー]{球}\ruby[reading=くく]{國}}) (1429–1609). Despite being a vassal state of the Empire of Japan from 1609 onwards, the kingdom had a degree of independence and the Okinawan language continued to be the language of administration until the late 19th century, when Emperor Meiji decided to more thoroughly integrate the islands into the Japanese mainland. The Okinawan language was banned and was practically invisible in public life by 1945, but with the end of World War II, saw a resurgence, though declined in prominence by the end of the 21ˢᵗ century.
 
-Language revitalization efforts are ongoing; a problem it faces is the ongoing language shift in the region and the dominant view among lay Japanese that Okinawan is a “dialect” (\cjk{\rubyA[reading=ほう]{方}\rubyA[reading=げん]{言}}) of Japanese rather than a language proper. (Japanese linguists, on the other hand, know better.)
+Language revitalization efforts are ongoing; a problem it faces is the ongoing language shift in the region and the dominant view among lay Japanese that Okinawan is a “dialect” (\cjk{\ruby[reading=ほう]{方}\ruby[reading=げん]{言}}) of Japanese rather than a language proper. (Japanese linguists, on the other hand, know better.)
 
-The characters proposed here are used by a minority of Okinawan writers. The majority use hiragana sequences, combined with outdated hiragana (to write Standard Japanese) such as \cjk{ゐ} and \cjk{ゑ}, to write the missing phonemes of Okinawan, or otherwise a Latin-based writing system based on linguistic transcription of Japanese; this system is used in most Okinawan dictionaries. Also extant is the University of the Ryukyus (\Oki{\rubyA[reading=るー]{琉}\rubyA[reading=ちゅー]{球}\rubyA[reading=廙]{大}\rubyA[reading=がく]{学}}) system, which in my research, seems mostly limited to academic use.
+The characters proposed here are used by a minority of Okinawan writers. The majority use hiragana sequences, combined with outdated hiragana (to write Standard Japanese) such as \cjk{ゐ} and \cjk{ゑ}, to write the missing phonemes of Okinawan, or otherwise a Latin-based writing system based on linguistic transcription of Japanese; this system is used in most Okinawan dictionaries. Also extant is the University of the Ryukyus (\Oki{\ruby[reading=るー]{琉}\ruby[reading=ちゅー]{球}\ruby[reading=廙]{大}\ruby[reading=がく]{学}}) system, which in my research, seems mostly limited to academic use.
 
 It is difficult for me to account for why these characters are minority usage; it's quite likely that their unencoded status makes them less usable on computers, decreasing their use. Their utility is obvious and their derivation very easy to figure out, being based on existing norms for writing Okinawan in Japanese, as well as even ancient norms for writing Okinawan.
 
 \section{History}
-\par{}The New Okinawan Kana (\cjk{\rubyA[reading=あら]{新}\rubyA[reading=うち]{沖}\rubyA[reading=なー]{縄}\rubyA[reading=む]{文}\rubyA[reading=滛]{字}}) are a system for writing the languages of Okinawa devised by Dr. Yoshiaki Funatsu, who for most of his life was a professor of statistics, applied mathematics and economics. Later in life, he visited Okinawa and became interested in its language; in the 1980's, he began creating the system of Okinawan letters described in this paper.
+\par{}The New Okinawan Kana (\cjk{\ruby[reading=あら]{新}\ruby[reading=うち]{沖}\ruby[reading=なー]{縄}\ruby[reading=む]{文}\ruby[reading=滛]{字}}) are a system for writing the languages of Okinawa devised by Dr. Yoshiaki Funatsu, who for most of his life was a professor of statistics, applied mathematics and economics. Later in life, he visited Okinawa and became interested in its language; in the 1980's, he began creating the system of Okinawan letters described in this paper.
 
 The Okinawan letters created by Funatsu are designed to be easy to understand for speakers of Okinawan; rather than being a complication, they're meant to simplify the writing of the language. It was also Mr. Funatsu's observation that children who were familiar with the system of Japanese kana more easily took to letters like \Oki{婢} than sequences like \cjk{とぅ}, which they would mispronounce as [tou].
 
@@ -261,7 +268,7 @@ The New Okinawan Kana are known in their author's documents as simply the “Oki
 
 Funatsu claims no copyright on these characters and allows free distribution of their shapes and phonetic values, unlike, for example, Mojikyō; therefore, GlyphWiki, (sticklers for copyright issues,) accept the New Okinawan Kana and have a category for them.\footnote{\Href[src=https://glyphwiki.org/wiki/Group:%e6%b2%96%e7%b8%84%e6%96%87%e5%ad%97]{\cjk{グループ:沖縄文字}}. GlyphWiki. Retrieved 2021-09-03.}
 
-There are two repertoirees in current use. The first repertoiree, consisting of all characters up to and including U+1AFE6, is exactly as it was in 1986, as explained in Funatsu's series of articles in the \em{Ryūkyū Shimpō} (\cjk{週休新報}). The second repertoiree, that plus U+1AFE7–U+1AFEA, is of more complex origin. It seems that originally, Funatsu did not consider word origin when coming up with this writing system. However, with the frequent and common mixing of Okinawan and Japanese words, he came up with those four characters in around 2004 to mark out a word's origin. For example, both \Oki{ちち} and \Oki{滋ち} are pronounced equally, as [t͡ɕit͡ɕi]. However, because \cjk{月} is pronounced in Japanese as \Oki{つき}, the second is used: \cjk{\rubyA[reading=滋ち]{月}}. Likewise, the extremely rare character \Oki{漢} has hardly any use at all, being used to transcribe e.g. \Oki{\rubyA[reading=み]{三}\rubyA[reading=か]{日}\rubyA[reading=漢き]{月}}. Nevertheless, just barely enough attestations were found for me to recommend even these rare characters.\footnote{Thanks again to Daichi Shimabukuro.} The chart:
+There are two repertoirees in current use. The first repertoiree, consisting of all characters up to and including U+1AFE6, is exactly as it was in 1986, as explained in Funatsu's series of articles in the \em{Ryūkyū Shimpō} (\cjk{週休新報}). The second repertoiree, that plus U+1AFE7–U+1AFEA, is of more complex origin. It seems that originally, Funatsu did not consider word origin when coming up with this writing system. However, with the frequent and common mixing of Okinawan and Japanese words, he came up with those four characters in around 2004 to mark out a word's origin. For example, both \Oki{ちち} and \Oki{滋ち} are pronounced equally, as [t͡ɕit͡ɕi]. However, because \cjk{月} is pronounced in Japanese as \Oki{つき}, the second is used: \cjk{\ruby[reading=滋ち]{月}}. Likewise, the extremely rare character \Oki{漢} has hardly any use at all, being used to transcribe e.g. \Oki{\ruby[reading=み]{三}\ruby[reading=か]{日}\ruby[reading=漢き]{月}}. Nevertheless, just barely enough attestations were found for me to recommend even these rare characters.\footnote{Thanks again to Daichi Shimabukuro.} The chart:
 
 \noindent\center{\img[height=68%fh, src=mojiichiran2.pdf]}
 
@@ -275,7 +282,7 @@ There are two repertoirees in current use. The first repertoiree, consisting of 
 
 Also of aid to the spread of the system could have been Funatsu's statement in most charts he authored which bear the letters, such as the 2016 one on the previous page, that:
 
-\cjk{\rubyA[reading=おき]{沖}\rubyA[reading=なわ]{縄}\rubyA[reading=も]{文}\rubyA[reading=じ]{字}の\rubyA[reading=し]{使}\rubyA[reading=よう]{用}は\rubyA[reading=じ]{自}\rubyA[reading=ゆう]{由}です。}
+\cjk{\ruby[reading=おき]{沖}\ruby[reading=なわ]{縄}\ruby[reading=も]{文}\ruby[reading=じ]{字}の\ruby[reading=し]{使}\ruby[reading=よう]{用}は\ruby[reading=じ]{自}\ruby[reading=ゆう]{由}です。}
 
 Use of the Okinawan letters is free.\footnote{In the sense of freedom, not price; Japanese, like French and Spanish, has different words for the different concepts.}
 
@@ -292,13 +299,13 @@ Daisuke Miura (\Href[src=https://twitter.com/qvarie]{@qvarie}) has come up with 
 
 I have fewer attestations of these letters, but still more than enough for encoding.
 
-These letters are in all fonts I've seen which support this system, including Nishiki-teki (\cjk{にしき{的}}). They are certainly expected, and they certainly do have a use, it is just that finding inline examples of them is challenging because they are only used in a few words. Especially, as noted, \Oki{漢}, which only has a single example across repertoires, \cjk{\rubyA[reading=み]{三}\rubyA[reading=か]{日}\rubyA[reading=漢き]{月}}. There just aren't that many words which have a clear shared etymology with Japanese and begin with \cjk{づ}, \em{itself} a rare kana, as it is pronounced equally to \cjk{ず} in Standard (Tokyo) Japanese (e.g. in the verb \cjk{\rubyA[reading=つづ]{続}く}).
+These letters are in all fonts I've seen which support this system, including Nishiki-teki (\cjk{にしき{的}}). They are certainly expected, and they certainly do have a use, it is just that finding inline examples of them is challenging because they are only used in a few words. Especially, as noted, \Oki{漢}, which only has a single example across repertoires, \cjk{\ruby[reading=み]{三}\ruby[reading=か]{日}\ruby[reading=漢き]{月}}. There just aren't that many words which have a clear shared etymology with Japanese and begin with \cjk{づ}, \em{itself} a rare kana, as it is pronounced equally to \cjk{ず} in Standard (Tokyo) Japanese (e.g. in the verb \cjk{\ruby[reading=つづ]{続}く}).
 
-\eject\section{\em{Shima Shotai} collision}
+\section{Shima Shotai collision}
 
 \noindent\center{\img[src=shimashotai.png, width=50%fw]}
 
-\par\em{Shima Shotai} (\cjk{しま\rubyA[reading=しょ]{素}\rubyA[reading=たい]{体}}) is an incompatible system presented by Shinji Ogawa (\cjk{\rubyA[reading=お]{小}\rubyA[reading=がわ]{川} \rubyA[reading=しん]{晋}\rubyA[reading=じ]{史}}), Masahiro Yamada (\cjk{\rubyA[reading=やま]{山}\rubyA[reading=だ]{田} \rubyA[reading=まさ]{真}\rubyA[reading=ひろ]{寛}}), Yuka Hayashi (\cjk{\rubyA[reading=はやし]{林} \rubyA[reading=ゆ]{由}\rubyA[reading=か]{華}}), and Hiroto Ueda (\cjk{\rubyA[reading=うえ]{上}\rubyA[reading=だ]{田} \rubyA[reading=ひろ]{寛}\rubyA[reading=と]{人}}) at ATypI, the typography conference held by the Association Typographique Internationale, in 2019.\footnote{See \Href[src=https://shimanomoji.site/atypi.html]{\cjk{しまの文字}.site}. In the presentation, Ogawa mentions that \em{Shima Shotai} have existed since 2015, but I could not independently verify this.} It is for the representation of the Ryukyuan languages. I have not as yet been able to find enough community use of this neography to recommend formally the encoding of its characters. The encoding of the New Okinawan Kana does not preclude future encoding of the \em{Shima Shotai} system, should it be used more widely.
+\par\em{Shima Shotai} (\cjk{しま\ruby[reading=しょ]{素}\ruby[reading=たい]{体}}) is an incompatible system presented by Shinji Ogawa (\cjk{\ruby[reading=お]{小}\ruby[reading=がわ]{川} \ruby[reading=しん]{晋}\ruby[reading=じ]{史}}), Masahiro Yamada (\cjk{\ruby[reading=やま]{山}\ruby[reading=だ]{田} \ruby[reading=まさ]{真}\ruby[reading=ひろ]{寛}}), Yuka Hayashi (\cjk{\ruby[reading=はやし]{林} \ruby[reading=ゆ]{由}\ruby[reading=か]{華}}), and Hiroto Ueda (\cjk{\ruby[reading=うえ]{上}\ruby[reading=だ]{田} \ruby[reading=ひろ]{寛}\ruby[reading=と]{人}}) at ATypI, the typography conference held by the Association Typographique Internationale, in 2019.\footnote{See \Href[src=https://shimanomoji.site/atypi.html]{\cjk{しまの文字}.site}. In the presentation, Ogawa mentions that \em{Shima Shotai} have existed since 2015, but I could not independently verify this.} It is for the representation of the Ryukyuan languages. I have not as yet been able to find enough community use of this neography to recommend formally the encoding of its characters. The encoding of the New Okinawan Kana does not preclude future encoding of the \em{Shima Shotai} system, should it be used more widely.
 
 \par\indent{}Furthermore, there is no possibility of a name collision between the New Okinawan Kana and the \em{Shima Shotai}. The only characters missing for the \em{Shima Shotai} are some small versions of existing hiragana and katakana letters. These have a clear pattern by which their names are derived, and it is already known that they belong in the block Small Kana Extension, which has room to receive them. It is also possible some more diacritics are needed to represent the \em{Shima Shotai}, but there is also an obvious way to name these diacritics as they are very similar in appearance to Latin typograhical diacriics, and if new diacritics are needed, they wouldn't have any specific Script category.
 
@@ -313,23 +320,17 @@ Note: Listed below are only attestations in which Funatsu, the creator of the ch
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—Tamaki, Yumi [\cjk{玉城 裕美}] (2009). \cjk{\Href[src=https://archive.is/ZcbJb]{ウチナークトゥバ：琉球語}} [Okinawan: A Language of Ryūkyū]. Kid's Seminar 2009 [\cjk{きっずせみなあ ２００９}]. Chubu University Center for the Study of Foreign Languages [\cjk{中部大学語学センター}].\bigskip}
 
-\eject
-
 \img[src=UchinaguchiSabira151.png, height=85%fh]
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—Nakamatsu, Takeo [\cjk{中松 竹雄}]; Funatsu, Yoshiaki [\cjk{船津 好明}] (2010). \cjk{沖縄口さびら} [Let's Speak Okinawan]. Naha: Ryūkyū Shimpo Publishing House [\cjk{琉球新報社}]. p. 151.\bigskip}
-
-\eject
 
 \noindent\img[src=OkinawaNoKoe.png, width=100%fw]
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—\Href[src=http://www.wwq.jp/q/mojihyooka/okikoeg.gif]{Excerpt from \cjk{おきなわの声}} (\em{The Voice of Okinawa Monthly}) issue 98, 1988.\bigskip}
 
-This article, entitled \cjk{い゙ー\rubyA[reading=そー]{正}\rubyA[reading=徭ち]{月}でーびる}, is of unknown authorship. At right is the Okinawan text, at left a Japanese translation. 
+This article, entitled \cjk{い゙ー\ruby[reading=そー]{正}\ruby[reading=徭ち]{月}でーびる}, is of unknown authorship. At right is the Okinawan text, at left a Japanese translation. 
 
-It's of particular interest that this was published without an explanatory chart, and lends credence to the idea that the letters have shapes that are so obvious to literate Okinawans as to need no explanation. The article is not about the kana themselves, but is rather about the fact that 1988 was the year of the dragon (\cjk{\rubyA[reading=たち嬨し]{龍年}}) in the Chinese Zodiac.
-
-\eject
+It's of particular interest that this was published without an explanatory chart, and lends credence to the idea that the letters have shapes that are so obvious to literate Okinawans as to need no explanation. The article is not about the kana themselves, but is rather about the fact that 1988 was the year of the dragon (\cjk{\ruby[reading=たち嬨し]{龍年}}) in the Chinese Zodiac.
 
 \noindent\boxaround{\img[src=Kobayashi2021.png, width=75%fw]}
 
@@ -347,15 +348,11 @@ The excerpt above laments the loss of the unique phonemes of Okinawan in colloqu
 
 Above, \highlight[color=#ffff00, margin=1.5px]{highlighted} is \Oki{望}.
 
-\eject
-
 \noindent\boxaround{\img[src=nl.png, width=100%fw]}
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—Newsletter of the Okinawa Speaker's Association (\cjk{沖縄語を話す会会報}), issue 26. Okinawan Edition (\cjk{うちなーぐちかわら版}). 2020-07-04.\bigskip}
 
 All 26 issues of this use the Okinawan kana; the example above is an example of an article in the newsletter by \cjk{児玉清子}.\footnote{Reading unknown. (Some Japanese names have multiple possible pronunciations, and unless specified explicitly can only be guessed at.)}
-
-\eject
 
 \noindent\boxaround{\img[src=p33_ja.png, height=33%fh]\img[src=p33_oki.png, height=33%fh]}
 
@@ -363,23 +360,17 @@ All 26 issues of this use the Okinawan kana; the example above is an example of 
 
 This source is particularly valuable because it has inline examples of two of the infrequent disambiguation letters. Because each song in this collection is intended for use detached from the whole, an explanation of the New Okinawan Kana used in the lyrics are on each page. \highlight[color=#ffff00, margin=1.5px]{Highlighted} are, from right to left, top to bottom, \hbox{\Oki{漢} \font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN DZI}}, \hbox{\Oki{滋} \font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TSI}}, and \hbox{\Oki{流} \font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN SI}}.
 
-\eject
-
 \noindent\boxaround{\center{\img[src=Music.png, height=85%fh]}}
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—Gokita, Hideo [\cjk{五木田 秀夫}] (2018). \Href[src=http://www.gokita.jp/]{\cjk{「琉球古典音楽」習}\Oki{廒}} [Learning Ryukyuan Classical Music]. Ryūkyū Classical Music Association [\cjk{琉球古典音楽協会}].\bigskip}
 
 (The pixelation of this image is in the original source.)
 
-\eject
-
 \noindent\boxaround{\center{\img[src=cartoon.png, height=75%fh]}}
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—Ōtsuki, Noriko [\cjk{大槻紀子}] (2011). \Href[src=http://www.wwq.jp/p/activities/uchinaalife.html]{\cjk{うちなーライフ in 東京}} [Okinawan Life in Tokyo]. \em{Shima-he} [\cjk{島へ。}] (magazine). \strong{78}: 31.\bigskip}
 
 This cute cartoon is of a meeting of the Okinawan Speaker's Association (\cjk{沖縄語を話す会}), a Tokyo group of Okinawan speakers, native and non-native. \highlight[color=#ffff00, margin=1.5px]{Highlighted} are \hbox{\Oki{嬨} \font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN DU}} and \hbox{\Oki{廒} \font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TI}}.
-
-\eject
 
 \noindent\boxaround{\center{\img[src=OFCN1.jpg, height=55%fh]\img[src=OFCN2.jpg, height=55%fh]}}
 
@@ -390,8 +381,6 @@ This cute cartoon is of a meeting of the Okinawan Speaker's Association (\cjk{�
 \noindent\boxaround{\center{\img[src=OFCN wu.png, height=20%fh]}}
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—Above newsletter, closeup of \Oki{歹} \font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WU}\bigskip}
-
-\eject
 
 \section{Fonts}
 
@@ -463,8 +452,8 @@ I propose that the block Kana Extended-C be two columns wide, beginning at U+1AF
 
 \section{Chart}
 
+\noindent\svg[src=oki2.svg, height=100%fh]
 \eject
-\noindent\svg[src=oki2_n.svg, height=100%fh]
 
 \frame[id=descs, top=top(content), left=25%pw, bottom=bottom(content), right=right(content)]
 \typeset-into[frame=descs]{
