@@ -8,8 +8,8 @@
 \bigskip
 \bigskip
 \noindent\center{\begin[cols=33%fw 33%fw 33%fw]{ptable}
-\begin{row}{\Cell{\font[size=18pt,weight=400]\lower[height=5pt]{⎛}}\Cell{\cjk{フレッド・ブレンナン}}\Cell{\lower[height=5pt]{⎞}}}\end{row}
-\begin{row}{\Cell{⎝}\Cell{\font[family=TT2020Base,style=Italic,size=18pt,weight=400]copypaste \font[family=Twemoji Mozilla]📧\font[family=TT2020Base,style=Italic] kittens.ph}\Cell{⎠}}\end{row}
+\begin{row}{\cell{\font[size=18pt,weight=400]\lower[height=5pt]{⎛}}\cell{\cjk{フレッド・ブレンナン}}\cell{\lower[height=5pt]{⎞}}}\end{row}
+\begin{row}{\cell{⎝}\cell{\font[family=TT2020Base,style=Italic,size=18pt,weight=400]copypaste \font[family=Twemoji Mozilla]📧\font[family=TT2020Base,style=Italic] kittens.ph}\cell{⎠}}\end{row}
 \end{ptable}}
 \bigskip
 \center{\par{}5 September 2021}
@@ -114,50 +114,50 @@ I propose that the block Kana Extended-C be two columns wide, beginning at U+1AF
 
 \subsection{Chart}
 
-\noindent\svg[src=oki.svg, height=100%fh]
+\noindent\svg[src=oki2.svg, height=100%fh]
 
 \frame[id=descs, top=top(content), left=25%pw, bottom=bottom(content), right=right(content)]
 \typeset-into[frame=descs]{
 \font[size=0.5em]{
 \ptable[cellborder=0,cols=30%fw 10%fw 60%fw]{
-\row{\Cell{U+1AFD0}\Cell{\Oki{婢}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TU}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{とぅ}}}
-\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{嬨}}}
-\row{\Cell{U+1AFD1}\Cell{\Oki{廒}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TI}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{てぃ}}}
-\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{廙}}}
-\row{\Cell{U+1AFD2}\Cell{\Oki{彩}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWA}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{くゎ}}}
-\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{徭}}}
-\row{\Cell{U+1AFD3}\Cell{\Oki{惘}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWI}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{くぃ}}}
-\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{慎}}}
-\row{\Cell{U+1AFD4}\Cell{\Oki{愈}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWE}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{くぇ}}}
-\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{憎}}}
-\row{\Cell{U+1AFD5}\Cell{\Oki{慠}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWA}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{ふゎ}}}
-\row{\Cell{U+1AFD6}\Cell{\Oki{懲}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWI}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{ふぃ}}}
-\row{\Cell{U+1AFD7}\Cell{\Oki{戴}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWE}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{ふぇ}}}
-\row{\Cell{U+1AFD8}\Cell{\Oki{揄}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YA}}}
-\row{\Cell{}\Cell{}\Cell{→ \cjk{や}}}
-\row{\Cell{U+1AFD9}\Cell{\Oki{搜}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YU}}}
-\row{\Cell{}\Cell{}\Cell{→ \cjk{ゆ}}}
-\row{\Cell{U+1AFDA}\Cell{\Oki{摒}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YO}}}
-\row{\Cell{}\Cell{}\Cell{→ \cjk{よ}}}
-\row{\Cell{U+1AFDB}\Cell{\Oki{敖}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WA}}}
-\row{\Cell{}\Cell{}\Cell{no relationship to \font[family=UniHentaiKana]{𛃍} hentaigana letter mi-5}}
-\row{\Cell{U+1AFDC}\Cell{\Oki{晴}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WI}}}
-\row{\Cell{}\Cell{}\Cell{→ \cjk{ゐ}}}
-\row{\Cell{}\Cell{}\Cell{no relationship to \font[family=UniHentaiKana]{𛀌} hentaigana letter u-3}}
-\row{\Cell{U+1AFDD}\Cell{\Oki{朗}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WE}}}
-\row{\Cell{}\Cell{}\Cell{→ \cjk{ゑ}}}
-\row{\Cell{U+1AFDE}\Cell{\Oki{望}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN N}}}
-\row{\Cell{}\Cell{}\Cell{→ \cjk{ん}}}
-\row{\Cell{U+1AFDF}\Cell{\Oki{歹}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WU}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{をぅ}}}
+\row{\cell{U+1AFD0}\cell{\Oki{婢}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TU}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{とぅ}}}
+\row{\cell{}\cell{}\cell{may receive \cjk{　゙} ⇒ \Oki{嬨}}}
+\row{\cell{U+1AFD1}\cell{\Oki{廒}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TI}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{てぃ}}}
+\row{\cell{}\cell{}\cell{may receive \cjk{　゙} ⇒ \Oki{廙}}}
+\row{\cell{U+1AFD2}\cell{\Oki{彩}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWA}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{くゎ}}}
+\row{\cell{}\cell{}\cell{may receive \cjk{　゙} ⇒ \Oki{徭}}}
+\row{\cell{U+1AFD3}\cell{\Oki{惘}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWI}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{くぃ}}}
+\row{\cell{}\cell{}\cell{may receive \cjk{　゙} ⇒ \Oki{慎}}}
+\row{\cell{U+1AFD4}\cell{\Oki{愈}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWE}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{くぇ}}}
+\row{\cell{}\cell{}\cell{may receive \cjk{　゙} ⇒ \Oki{憎}}}
+\row{\cell{U+1AFD5}\cell{\Oki{慠}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWA}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{ふゎ}}}
+\row{\cell{U+1AFD6}\cell{\Oki{懲}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWI}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{ふぃ}}}
+\row{\cell{U+1AFD7}\cell{\Oki{戴}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWE}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{ふぇ}}}
+\row{\cell{U+1AFD8}\cell{\Oki{揄}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YA}}}
+\row{\cell{}\cell{}\cell{→ \cjk{や}}}
+\row{\cell{U+1AFD9}\cell{\Oki{搜}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YU}}}
+\row{\cell{}\cell{}\cell{→ \cjk{ゆ}}}
+\row{\cell{U+1AFDA}\cell{\Oki{摒}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YO}}}
+\row{\cell{}\cell{}\cell{→ \cjk{よ}}}
+\row{\cell{U+1AFDB}\cell{\Oki{敖}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WA}}}
+\row{\cell{}\cell{}\cell{no relationship to \font[family=UniHentaiKana]{𛃍} hentaigana letter mi-5}}
+\row{\cell{U+1AFDC}\cell{\Oki{晴}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WI}}}
+\row{\cell{}\cell{}\cell{→ \cjk{ゐ}}}
+\row{\cell{}\cell{}\cell{no relationship to \font[family=UniHentaiKana]{𛀌} hentaigana letter u-3}}
+\row{\cell{U+1AFDD}\cell{\Oki{朗}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WE}}}
+\row{\cell{}\cell{}\cell{→ \cjk{ゑ}}}
+\row{\cell{U+1AFDE}\cell{\Oki{望}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN N}}}
+\row{\cell{}\cell{}\cell{→ \cjk{ん}}}
+\row{\cell{U+1AFDF}\cell{\Oki{歹}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WU}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{をぅ}}}
 }
 }
 }
@@ -166,18 +166,18 @@ I propose that the block Kana Extended-C be two columns wide, beginning at U+1AF
 \typeset-into[frame=descs]{
 \font[size=0.7em]{
 \ptable[cellborder=0,cols=30%fw 10%fw 60%fw]{
-\row{\Cell{U+1AFE0}\Cell{\highlight[color=#b1e4f8]{\Oki{流}}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN SI}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{すぃ}}}
-\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{滛}}}
-\row{\Cell{U+1AFE1}\Cell{\highlight[color=#b1e4f8]{\Oki{滋}}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TSI}}}
-\row{\Cell{}\Cell{}\Cell{ligature of \cjk{つぃ}}}
-\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{漢}}}
-\row{\Cell{U+3044 U+3099}\Cell{\highlight[color=#feaeae]{\Oki{杖}}}\Cell{\font[features=+c2sc]{N/A}}}
-\row{\Cell{}\Cell{}\Cell{\cjk{＝} \cjk{い} + \cjk{　゙}}}
-\row{\Cell{}\Cell{}\Cell{\cjk{＝} New Okinawan yi}}
-\row{\Cell{U+3048 U+3099}\Cell{\highlight[color=#feaeae]{\Oki{殺}}}\Cell{\font[features=+c2sc]{N/A}}}
-\row{\Cell{}\Cell{}\Cell{\cjk{＝} \cjk{え} + \cjk{　゙}}}
-\row{\Cell{}\Cell{}\Cell{\cjk{＝} New Okinawan ye}}
+\row{\cell{U+1AFE0}\cell{\highlight[color=#b1e4f8]{\Oki{流}}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN SI}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{すぃ}}}
+\row{\cell{}\cell{}\cell{may receive \cjk{　゙} ⇒ \Oki{滛}}}
+\row{\cell{U+1AFE1}\cell{\highlight[color=#b1e4f8]{\Oki{滋}}}\cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TSI}}}
+\row{\cell{}\cell{}\cell{ligature of \cjk{つぃ}}}
+\row{\cell{}\cell{}\cell{may receive \cjk{　゙} ⇒ \Oki{漢}}}
+\row{\cell{U+3044 U+3099}\cell{\highlight[color=#feaeae]{\Oki{杖}}}\cell{\font[features=+c2sc]{N/A}}}
+\row{\cell{}\cell{}\cell{\cjk{＝} \cjk{い} + \cjk{　゙}}}
+\row{\cell{}\cell{}\cell{\cjk{＝} New Okinawan yi}}
+\row{\cell{U+3048 U+3099}\cell{\highlight[color=#feaeae]{\Oki{殺}}}\cell{\font[features=+c2sc]{N/A}}}
+\row{\cell{}\cell{}\cell{\cjk{＝} \cjk{え} + \cjk{　゙}}}
+\row{\cell{}\cell{}\cell{\cjk{＝} New Okinawan ye}}
 }
 \medskip
 \noindent\par{}\highlight[color=#feaeae, margin=2px]{See § Atomicity of \cjk{い゙} and \cjk{え゙}}
