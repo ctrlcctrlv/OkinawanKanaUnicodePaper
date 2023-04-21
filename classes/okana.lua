@@ -6,22 +6,19 @@ class._name = "okana"
 function class:_init (options)
   book._init(self, options)
 
-  self:loadPackage("lists")
   self:loadPackage("rules")
+  self:loadPackage("lists")
+  self:loadPackage("ptable")
   self:loadPackage("url")
   self:loadPackage("color")
   self:loadPackage("highlight")
   self:loadPackage("date")
-  self:loadPackage("simpletable", {
-    tableTag = "table",
-    trTag = "tr",
-    tdTag = "td"
-  })
   self:loadPackage("features")
   self:loadPackage("frametricks")
   self:loadPackage("rotate")
   self:loadPackage("tate")
   self:loadPackage("rebox")
+  self:loadPackage("font-fallback")
   self:loadPackage("linespacing")
   self:loadPackage("pullquote")
   self:loadPackage("unichar")
@@ -32,7 +29,6 @@ function class:_init (options)
 
   self:registerPostinit(function(_)
     self:loadPackage("ruby")
-    SILE.settings:set("ruby.height", "2em", true)
   end)
 
   SILE.settings:set("font.family", "EB Garamond", true)
@@ -44,10 +40,6 @@ function class:registerCommands ()
 
   book.registerCommands(self)
 
-  self:registerCommand("ruby:font", function (_, _)
-    SILE.call("font", { family = "Noto Serif CJK JP", weight = 900, size = "0.5em" })
-  end)
-
   self:registerCommand("Figure:counter", function ()
     SILE.call("increment-counter", { id = "figure" })
     SILE.call("show-counter", { id = "figuer" })
@@ -57,8 +49,15 @@ function class:registerCommands ()
     SILE.call("font", { family = "Noto Serif CJK JP", size = "0.95em" }, content)
   end)
 
+  self:registerCommand("Cell", function (_, content)
+    SILE.call("cell", {}, function ()
+      SILE.call("noindent")
+      SILE.process(content)
+    end)
+  end)
+
   self:registerCommand("mathfourtd", function (_, content)
-    SILE.call("td", nil, function ()
+    SILE.call("Cell", {}, function ()
       SILE.call("font", { family = "MathJax_Size4" }, content)
     end)
   end)
