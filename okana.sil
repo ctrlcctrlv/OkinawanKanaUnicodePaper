@@ -1,17 +1,12 @@
 \begin[class=book]{document}
-\script[src=lists]
 \script[src=packages/rules]
+\script[src=packages/lists]
+\script[src=packages/ptable]
 \script[src=packages/url]
 \script[src=packages/color]
 \script[src=highlight]
 \script[src=packages/date]
 \script{
-SILE.use("packages/simpletable", {
- tableTag = "table",
- trTag = "tr",
- tdTag = "td"
-})
-
 SILE.registerCommand('Href', function(options, content)
     SILE.call("color", {color="#000099"}, function() SILE.call("href", options, content) end)
 end)
@@ -26,8 +21,8 @@ end)
 \script[src=packages/rotate]
 \script[src=packages/tate]
 \script[src=packages/rebox]
+\script[src=packages/font-fallback]
 \script[src=packages/ruby]
-\define[command=ruby:font]{\font[family=Noto Serif CJK JP,weight=900,size=0.5em]}
 \script[src=packages/linespacing]
 \script[src=packages/pullquote]
 \script[src=packages/unichar]
@@ -35,16 +30,15 @@ end)
 \script[src=packages/svg]
 \script[src=packages/image]
 \script[src=packages/raiselower]
-\script[src=packages/tableofcontents]
 \define[command=Figure:counter]{\increment-counter[id=figure]\show-counter[id=figure]}
+\define[command=Cell]{\cell{{\noindent{}\process}}}
 \language[main=en]
 \define[command=cjk]{\font[size=0.95em,family=Noto Serif CJK JP]{\process}}
-\define[command=mathfourtd]{\td{\font[family=MathJax_Size4]{\process}}}
+\define[command=mathfourtd]{\Cell{\font[family=MathJax_Size4]{\process}}}
 \define[command=nofoliosthispage]{\folios}
 \set[parameter=font.family,value=EB Garamond,makedefault=true]
 \set[parameter=font.size,value=12,makedefault=true]
 \define[command=footnote:font]{\font[size=0.6em]{\set[parameter=document.baselineskip,value=0.5ex]{\process\par}}}
-\set[parameter=ruby.height, value=2em]
 
 \font[size=24pt,weight=1000,features=+smcp]{
 \par\noindent\center{Proposal to encode \skip[height=0.333em] New Okinawan Kana \cjk{({\ruby[reading=しん]{新}\ruby[reading=おき]{沖}\ruby[reading=なわ]{縄}\ruby[reading=も]{文}\ruby[reading=じ]{字}})} \goodbreak in the UCS}}
@@ -53,10 +47,10 @@ end)
 \par\noindent\center{\font[size=18pt,weight=400]{{Fredrick R. Brennan}}}
 \bigskip
 \bigskip
-\noindent\center{\begin{table}
-\tr{\font[size=18pt,weight=400]\mathfourtd{\lower[height=5pt]{⎛}}\td{\glue[width=5%pw]\cjk{フレッド・ブレンナン}}\mathfourtd{\lower[height=5pt]{⎞}}}
-\tr{\mathfourtd{⎝}\td{\font[family=TT2020Base,style=Italic,size=18pt,weight=400]copypaste \font[family=Twemoji Mozilla]📧\font[family=TT2020Base,style=Italic] kittens.ph}\mathfourtd{⎠}}
-\end{table}}
+\noindent\center{\begin[cols=33%fw 33%fw 33%fw]{ptable}
+\begin{row}{\Cell{\font[size=18pt,weight=400]\lower[height=5pt]{⎛}}\Cell{\cjk{フレッド・ブレンナン}}\Cell{\lower[height=5pt]{⎞}}}\end{row}
+\begin{row}{\Cell{⎝}\Cell{\font[family=TT2020Base,style=Italic,size=18pt,weight=400]copypaste \font[family=Twemoji Mozilla]📧\font[family=TT2020Base,style=Italic] kittens.ph}\Cell{⎠}}\end{row}
+\end{ptable}}
 \bigskip
 \center{\par{}5 September 2021}
 \bigskip
@@ -120,9 +114,12 @@ end)
 \eject
 
 \tableofcontents
-\chapter{Quick summary}
 
-I propose the encoding of 27 new hiragana letters, to be added to a new block, Kana Extended-C. There are no katakana versions of these letters. I only have evidence of the proposed letters in use to write the Central Okinawan language (\cjk{沖縄口}, \cjk{うちなあぐち}, [ʔut͡ɕinaːɡut͡ɕi]), although they may be used to write other languages in the Ryukyuan language family. These letters are known collectively in Japanese as the “New Okinawan Kana” (\cjk{新沖縄文字}); 23 of them have existed since 1986, with the remaining four having been created c. 2004. All 27 are the creation of Dr. Yoshiaki Funatsu (\cjk{船津好明}; born 1936), a professor of statistics, applied mathematics and economics; he later in life became a linguist.
+\section{Quick summary}
+
+I propose the encoding of 18 new hiragana letters, to be added to a new block, Kana Extended-C. There are no katakana versions of these letters. I only have evidence of the proposed letters in use to write the Central Okinawan language (\cjk{沖縄口}, \cjk{うちなあぐち}, [ʔut͡ɕinaːɡut͡ɕi]), although they may be used to write other languages in the Ryukyuan language family.
+
+Through adding U+3099 \font[features=+c2sc]{COMBINING KATAKANA-HIRAGANA VOICED SOUND MARK}, these characters represent all 27 of the letters known collectively in Japanese as the “New Okinawan Kana” (\cjk{新沖縄文字}). 23 of them have existed since 1986, with the remaining four having been created c. 2004. They are the creation of Dr. Yoshiaki Funatsu (\cjk{船津好明}; born 1936), a professor of statistics, applied mathematics and economics; he later in life became a linguist.
 
 Despite their novelty, these letters have seen quite wide use throughout Okinawa. I had no contact with Mr. Funatsu while writing this paper.
 
@@ -130,120 +127,105 @@ I propose that the block Kana Extended-C be two columns wide, beginning at U+1AF
 
 \bigskip
 
-\section{UnicodeData.txt}
+\subsection{UnicodeData.txt}
 
 \begin{verbatim}
 1AFD0;HIRAGANA LETTER NEW OKINAWAN TU;Lo;0;L;;;;;N;;;;;
-1AFD1;HIRAGANA LETTER NEW OKINAWAN DU;Lo;0;L;;;;;N;;;;;
-1AFD2;HIRAGANA LETTER NEW OKINAWAN TI;Lo;0;L;;;;;N;;;;;
-1AFD3;HIRAGANA LETTER NEW OKINAWAN DI;Lo;0;L;;;;;N;;;;;
-1AFD4;HIRAGANA LETTER NEW OKINAWAN KWA;Lo;0;L;;;;;N;;;;;
-1AFD5;HIRAGANA LETTER NEW OKINAWAN GWA;Lo;0;L;;;;;N;;;;;
-1AFD6;HIRAGANA LETTER NEW OKINAWAN KWI;Lo;0;L;;;;;N;;;;;
-1AFD7;HIRAGANA LETTER NEW OKINAWAN GWI;Lo;0;L;;;;;N;;;;;
-1AFD8;HIRAGANA LETTER NEW OKINAWAN KWE;Lo;0;L;;;;;N;;;;;
-1AFD9;HIRAGANA LETTER NEW OKINAWAN GWE;Lo;0;L;;;;;N;;;;;
-1AFDA;HIRAGANA LETTER NEW OKINAWAN HWA;Lo;0;L;;;;;N;;;;;
-1AFDB;HIRAGANA LETTER NEW OKINAWAN HWI;Lo;0;L;;;;;N;;;;;
-1AFDC;HIRAGANA LETTER NEW OKINAWAN HWE;Lo;0;L;;;;;N;;;;;
-1AFDD;HIRAGANA LETTER NEW OKINAWAN YA;Lo;0;L;;;;;N;;;;;
-1AFDE;HIRAGANA LETTER NEW OKINAWAN YU;Lo;0;L;;;;;N;;;;;
-1AFDF;HIRAGANA LETTER NEW OKINAWAN YO;Lo;0;L;;;;;N;;;;;
-1AFE0;HIRAGANA LETTER NEW OKINAWAN WA;Lo;0;L;;;;;N;;;;;
-1AFE1;HIRAGANA LETTER NEW OKINAWAN WI;Lo;0;L;;;;;N;;;;;
-1AFE2;HIRAGANA LETTER NEW OKINAWAN WE;Lo;0;L;;;;;N;;;;;
-1AFE3;HIRAGANA LETTER NEW OKINAWAN N;Lo;0;L;;;;;N;;;;;
-1AFE4;HIRAGANA LETTER NEW OKINAWAN WU;Lo;0;L;;;;;N;;;;;
-1AFE5;HIRAGANA LETTER NEW OKINAWAN SI;Lo;0;L;;;;;N;;;;;
-1AFE6;HIRAGANA LETTER NEW OKINAWAN ZI;Lo;0;L;;;;;N;;;;;
-1AFE7;HIRAGANA LETTER NEW OKINAWAN TSI;Lo;0;L;;;;;N;;;;;
-1AFE8;HIRAGANA LETTER NEW OKINAWAN DZI;Lo;0;L;;;;;N;;;;;
-1AFE9;HIRAGANA LETTER I WITH VOICED SOUND MARK;Lo;0;L;;;;;N;;;;;
-1AFEA;HIRAGANA LETTER E WITH VOICED SOUND MARK;Lo;0;L;;;;;N;;;;;
+1AFD1;HIRAGANA LETTER NEW OKINAWAN TI;Lo;0;L;;;;;N;;;;;
+1AFD2;HIRAGANA LETTER NEW OKINAWAN KWA;Lo;0;L;;;;;N;;;;;
+1AFD3;HIRAGANA LETTER NEW OKINAWAN KWI;Lo;0;L;;;;;N;;;;;
+1AFD4;HIRAGANA LETTER NEW OKINAWAN KWE;Lo;0;L;;;;;N;;;;;
+1AFD5;HIRAGANA LETTER NEW OKINAWAN HWA;Lo;0;L;;;;;N;;;;;
+1AFD6;HIRAGANA LETTER NEW OKINAWAN HWI;Lo;0;L;;;;;N;;;;;
+1AFD7;HIRAGANA LETTER NEW OKINAWAN HWE;Lo;0;L;;;;;N;;;;;
+1AFD8;HIRAGANA LETTER NEW OKINAWAN YA;Lo;0;L;;;;;N;;;;;
+1AFD9;HIRAGANA LETTER NEW OKINAWAN YU;Lo;0;L;;;;;N;;;;;
+1AFDA;HIRAGANA LETTER NEW OKINAWAN YO;Lo;0;L;;;;;N;;;;;
+1AFDB;HIRAGANA LETTER NEW OKINAWAN WA;Lo;0;L;;;;;N;;;;;
+1AFDC;HIRAGANA LETTER NEW OKINAWAN WI;Lo;0;L;;;;;N;;;;;
+1AFDD;HIRAGANA LETTER NEW OKINAWAN WE;Lo;0;L;;;;;N;;;;;
+1AFDE;HIRAGANA LETTER NEW OKINAWAN N;Lo;0;L;;;;;N;;;;;
+1AFDF;HIRAGANA LETTER NEW OKINAWAN WU;Lo;0;L;;;;;N;;;;;
+1AFE0;HIRAGANA LETTER NEW OKINAWAN SI;Lo;0;L;;;;;N;;;;;
+1AFE1;HIRAGANA LETTER NEW OKINAWAN TSI;Lo;0;L;;;;;N;;;;;
 \end{verbatim}
 
-\section{Chart}
+\supereject
 
-\noindent\svg[src=oki2.svg, height=100%fh]
-\eject
+\subsection{Chart}
+
+\noindent\svg[src=oki.svg, height=100%fh]
+
+\frame[id=descs, top=top(content), left=25%pw, bottom=bottom(content), right=right(content)]
+\typeset-into[frame=descs]{
+\font[size=0.5em]{
+\ptable[cellborder=0,cols=30%fw 10%fw 60%fw]{
+\row{\Cell{U+1AFD0}\Cell{\Oki{婢}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TU}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{とぅ}}}
+\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{嬨}}}
+\row{\Cell{U+1AFD1}\Cell{\Oki{廒}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TI}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{てぃ}}}
+\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{廙}}}
+\row{\Cell{U+1AFD2}\Cell{\Oki{彩}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWA}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{くゎ}}}
+\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{徭}}}
+\row{\Cell{U+1AFD3}\Cell{\Oki{惘}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWI}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{くぃ}}}
+\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{慎}}}
+\row{\Cell{U+1AFD4}\Cell{\Oki{愈}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWE}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{くぇ}}}
+\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{憎}}}
+\row{\Cell{U+1AFD5}\Cell{\Oki{慠}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWA}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{ふゎ}}}
+\row{\Cell{U+1AFD6}\Cell{\Oki{懲}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWI}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{ふぃ}}}
+\row{\Cell{U+1AFD7}\Cell{\Oki{戴}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWE}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{ふぇ}}}
+\row{\Cell{U+1AFD8}\Cell{\Oki{揄}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YA}}}
+\row{\Cell{}\Cell{}\Cell{→ \cjk{や}}}
+\row{\Cell{U+1AFD9}\Cell{\Oki{搜}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YU}}}
+\row{\Cell{}\Cell{}\Cell{→ \cjk{ゆ}}}
+\row{\Cell{U+1AFDA}\Cell{\Oki{摒}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YO}}}
+\row{\Cell{}\Cell{}\Cell{→ \cjk{よ}}}
+\row{\Cell{U+1AFDB}\Cell{\Oki{敖}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WA}}}
+\row{\Cell{}\Cell{}\Cell{no relationship to \font[family=UniHentaiKana]{𛃍} hentaigana letter mi-5}}
+\row{\Cell{U+1AFDC}\Cell{\Oki{晴}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WI}}}
+\row{\Cell{}\Cell{}\Cell{→ \cjk{ゐ}}}
+\row{\Cell{}\Cell{}\Cell{no relationship to \font[family=UniHentaiKana]{𛀌} hentaigana letter u-3}}
+\row{\Cell{U+1AFDD}\Cell{\Oki{朗}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WE}}}
+\row{\Cell{}\Cell{}\Cell{→ \cjk{ゑ}}}
+\row{\Cell{U+1AFDE}\Cell{\Oki{望}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN N}}}
+\row{\Cell{}\Cell{}\Cell{→ \cjk{ん}}}
+\row{\Cell{U+1AFDF}\Cell{\Oki{歹}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WU}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{をぅ}}}
+}
+}
+}
 
 \frame[id=descs, top=top(content), left=25%pw, bottom=bottom(content), right=right(content)]
 \typeset-into[frame=descs]{
 \font[size=0.7em]{
-\table{
-\tr{\td{U+1AFD0}\td{\glue[width=0.25em]\Oki{婢}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TU}}}
-\tr{\td{}\td{}\td{ligature of \cjk{とぅ}}}
-\tr{\td{U+1AFD1}\td{\glue[width=0.25em]\Oki{嬨}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN DU}}}
-\tr{\td{}\td{}\td{ligature of \cjk{どぅ}}}
-\tr{\td{U+1AFD2}\td{\glue[width=0.25em]\Oki{廒}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{てぃ}}}
-\tr{\td{U+1AFD3}\td{\glue[width=0.25em]\Oki{廙}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN DI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{でぃ}}}
-\tr{\td{U+1AFD4}\td{\glue[width=0.25em]\Oki{彩}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWA}}}
-\tr{\td{}\td{}\td{ligature of \cjk{くゎ}}}
-\tr{\td{U+1AFD5}\td{\glue[width=0.25em]\Oki{徭}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN GWA}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ぐゎ}}}
-\tr{\td{U+1AFD6}\td{\glue[width=0.25em]\Oki{惘}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{くぃ}}}
-\tr{\td{U+1AFD7}\td{\glue[width=0.25em]\Oki{慎}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN GWI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ぐぃ}}}
-\tr{\td{U+1AFD8}\td{\glue[width=0.25em]\Oki{愈}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWE}}}
-\tr{\td{}\td{}\td{ligature of \cjk{くぇ}}}
-\tr{\td{U+1AFD9}\td{\glue[width=0.25em]\Oki{憎}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN GWE}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ぐぇ}}}
-\tr{\td{U+1AFDA}\td{\glue[width=0.25em]\Oki{慠}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWA}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ふゎ}}}
-\tr{\td{U+1AFDB}\td{\glue[width=0.25em]\Oki{懲}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ふぃ}}}
-\tr{\td{U+1AFDC}\td{\glue[width=0.25em]\Oki{戴}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWE}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ふぇ}}}
-\tr{\td{U+1AFDD}\td{\glue[width=0.25em]\Oki{揄}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YA}}}
-\tr{\td{}\td{}\td{→ \cjk{や}}}
-\tr{\td{U+1AFDE}\td{\glue[width=0.25em]\Oki{搜}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YU}}}
-\tr{\td{}\td{}\td{→ \cjk{ゆ}}}
-\tr{\td{U+1AFDF}\td{\glue[width=0.25em]\Oki{摒}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YO}}}
-\tr{\td{}\td{}\td{→ \cjk{よ}}}
-\tr{\td{U+1AFE0}\td{\glue[width=0.25em]\Oki{敖}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WA}}}
-\tr{\td{}\td{}\td{no relationship to \font[family=UniHentaiKana]{𛃍} hentaigana letter mi-5}}
-\tr{\td{U+1AFE1}\td{\glue[width=0.25em]\Oki{晴}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WI}}}
-\tr{\td{}\td{}\td{→ \cjk{ゐ}}}
-\tr{\td{}\td{}\td{no relationship to \font[family=UniHentaiKana]{𛀌} hentaigana letter u-3}}
-\tr{\td{U+1AFE2}\td{\glue[width=0.25em]\Oki{朗}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WE}}}
-\tr{\td{}\td{}\td{→ \cjk{ゑ}}}
-\tr{\td{U+1AFE3}\td{\glue[width=0.25em]\Oki{望}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN N}}}
-\tr{\td{}\td{}\td{→ \cjk{ん}}}
-}
-}
-}
-
-\frame[id=descs, top=top(content), left=60%pw, bottom=bottom(content), right=right(content)]
-\typeset-into[frame=descs]{
-\font[size=0.7em]{
-\table{
-\tr{\td{U+1AFE4}\td{\glue[width=0.25em]\Oki{歹}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WU}}}
-\tr{\td{}\td{}\td{ligature of \cjk{をぅ}}}
-\tr{\td{U+1AFE5}\td{\highlight[color=#b1e4f8]{\glue[width=0.25em]\Oki{流}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN SI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{すぃ}}}
-\tr{\td{U+1AFE6}\td{\highlight[color=#b1e4f8]{\glue[width=0.25em]\Oki{滛}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN ZI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ずぃ}}}
-\tr{\td{U+1AFE7}\td{\highlight[color=#b1e4f8]{\glue[width=0.25em]\Oki{滋}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TSI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{つぃ}}}
-\tr{\td{U+1AFE8}\td{\highlight[color=#b1e4f8]{\glue[width=0.25em]\Oki{漢}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN DZI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{づぃ}}}
-\tr{\td{U+1AFE9}\td{\highlight[color=#feaeae]{\glue[width=0.25em]\Oki{杖}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER I WITH VOICED SOUND MARK}}}
-\tr{\td{}\td{}\td{\cjk{＝} \cjk{い} + \cjk{　゙}}}
-\tr{\td{}\td{}\td{\cjk{＝} New Okinawan yi}}
-\tr{\td{U+1AFEA}\td{\highlight[color=#feaeae]{\glue[width=0.25em]\Oki{殺}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER E WITH VOICED SOUND MARK}}}
-\tr{\td{}\td{}\td{\cjk{＝} \cjk{え} + \cjk{　゙}}}
-\tr{\td{}\td{}\td{\cjk{＝} New Okinawan ye}}
+\ptable[cellborder=0,cols=30%fw 10%fw 60%fw]{
+\row{\Cell{U+1AFE0}\Cell{\highlight[color=#b1e4f8]{\Oki{流}}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN SI}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{すぃ}}}
+\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{滛}}}
+\row{\Cell{U+1AFE1}\Cell{\highlight[color=#b1e4f8]{\Oki{滋}}}\Cell{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TSI}}}
+\row{\Cell{}\Cell{}\Cell{ligature of \cjk{つぃ}}}
+\row{\Cell{}\Cell{}\Cell{may receive \cjk{　゙} ⇒ \Oki{漢}}}
+\row{\Cell{U+3044 U+3099}\Cell{\highlight[color=#feaeae]{\Oki{杖}}}\Cell{\font[features=+c2sc]{N/A}}}
+\row{\Cell{}\Cell{}\Cell{\cjk{＝} \cjk{い} + \cjk{　゙}}}
+\row{\Cell{}\Cell{}\Cell{\cjk{＝} New Okinawan yi}}
+\row{\Cell{U+3048 U+3099}\Cell{\highlight[color=#feaeae]{\Oki{殺}}}\Cell{\font[features=+c2sc]{N/A}}}
+\row{\Cell{}\Cell{}\Cell{\cjk{＝} \cjk{え} + \cjk{　゙}}}
+\row{\Cell{}\Cell{}\Cell{\cjk{＝} New Okinawan ye}}
 }
 \medskip
 \noindent\par{}\highlight[color=#feaeae, margin=2px]{See § Atomicity of \cjk{い゙} and \cjk{え゙}}
-\noindent\par{}\highlight[color=#b1e4f8, margin=2px]{See § Infrequent disambiguation letters}
 }
 }
 
-\chapter{Overview}
+\supereject
+\section{Overview}
 
 Central Okinawan (hereon Okinawan) is the most widely spoken and studied language in the family of Ryukyuan languages, which are Japonic languages spoken in Okinawa and Kagoshima Prefectures\break(\cjk{\ruby[reading=うちなーちん]{沖縄県}}\Oki{婢}\cjk{\ruby[reading=か]{鹿}\ruby[reading=ご]{児}\ruby[reading=しま]{島}\ruby[reading=ちん]{県}}), which are the modern day territories consisting of the land which used to belong to the ancient independent Ryūkyū Kingdom (\cjk{\ruby[reading=るー]{琉}\ruby[reading=ちゅー]{球}\ruby[reading=くく]{國}}) (1429–1609). Despite being a vassal state of the Empire of Japan from 1609 onwards, the kingdom had a degree of independence and the Okinawan language continued to be the language of administration until the late 19th century, when Emperor Meiji decided to more thoroughly integrate the islands into the Japanese mainland. The Okinawan language was banned and was practically invisible in public life by 1945, but with the end of World War II, saw a resurgence, though declined in prominence by the end of the 21ˢᵗ century.
 
@@ -253,7 +235,7 @@ The characters proposed here are used by a minority of Okinawan writers. The maj
 
 It is difficult for me to account for why these characters are minority usage; it's quite likely that their unencoded status makes them less usable on computers, decreasing their use. Their utility is obvious and their derivation very easy to figure out, being based on existing norms for writing Okinawan in Japanese, as well as even ancient norms for writing Okinawan.
 
-\section{History}
+\subsection{History}
 \par{}The New Okinawan Kana (\cjk{\ruby[reading=あら]{新}\ruby[reading=うち]{沖}\ruby[reading=なー]{縄}\ruby[reading=む]{文}\ruby[reading=滛]{字}}) are a system for writing the languages of Okinawa devised by Dr. Yoshiaki Funatsu, who for most of his life was a professor of statistics, applied mathematics and economics. Later in life, he visited Okinawa and became interested in its language; in the 1980's, he began creating the system of Okinawan letters described in this paper.
 
 The Okinawan letters created by Funatsu are designed to be easy to understand for speakers of Okinawan; rather than being a complication, they're meant to simplify the writing of the language. It was also Mr. Funatsu's observation that children who were familiar with the system of Japanese kana more easily took to letters like \Oki{婢} than sequences like \cjk{とぅ}, which they would mispronounce as [tou].
@@ -286,8 +268,8 @@ Also of aid to the spread of the system could have been Funatsu's statement in m
 
 Use of the Okinawan letters is free.\footnote{In the sense of freedom, not price; Japanese, like French and Spanish, has different words for the different concepts.}
 
-\chapter{Potential technical issues}
-\section{Atomicity of \cjk{い゙} and \cjk{え゙}}
+\section{Potential technical issues}
+\subsection{Atomicity of \cjk{い゙} and \cjk{え゙}}
 
 The atomicity of \cjk{い゙} and \cjk{え゙} is unlikely to be upheld, however, I find it necessary to request it be considered; in any event, I mention it here so users understand why it was not done.
 
@@ -295,13 +277,13 @@ Existing fonts encode the characters atomically (see § Fonts), and, a legacy en
 
 Daisuke Miura (\Href[src=https://twitter.com/qvarie]{@qvarie}) has come up with a de-facto standard that also assumes their atomic encoding; at least one other font is using this encoding as well, and it is mentioned on GlyphWiki as "\code{unstable-nishiki}".\footnote{This uses Private Use Area codepoints in Miura's font “\Href[src=http://umihotaru.work/]{Nishiki-teki}” (\cjk{にしき{的}}).} \cjk{い゙} \cjk{＝} \cjk{にしき的}F464; \cjk{え゙} \cjk{＝} \cjk{にしき的}F466.
 
-\section{Infrequent disambiguation letters}
+\subsection{Infrequent disambiguation letters}
 
 I have fewer attestations of these letters, but still more than enough for encoding.
 
 These letters are in all fonts I've seen which support this system, including Nishiki-teki (\cjk{にしき{的}}). They are certainly expected, and they certainly do have a use, it is just that finding inline examples of them is challenging because they are only used in a few words. Especially, as noted, \Oki{漢}, which only has a single example across repertoires, \cjk{\ruby[reading=み]{三}\ruby[reading=か]{日}\ruby[reading=漢き]{月}}. There just aren't that many words which have a clear shared etymology with Japanese and begin with \cjk{づ}, \em{itself} a rare kana, as it is pronounced equally to \cjk{ず} in Standard (Tokyo) Japanese (e.g. in the verb \cjk{\ruby[reading=つづ]{続}く}).
 
-\section{Shima Shotai collision}
+\subsection{Shima Shotai collision}
 
 \noindent\center{\img[src=shimashotai.png, width=50%fw]}
 
@@ -311,10 +293,10 @@ These letters are in all fonts I've seen which support this system, including Ni
 
 \par{}While the authors of the \em{Shima Shotai} stated in 2019 that their top priority was being encoded in Unicode, no proposal has been submited as of the date of this paper. Nonetheless, I am confident that the encoding of my requested characters would do nothing to hinder a possible future encoding of theirs should adequate third-party use of their \em{Shima Shotai} system be documented.
 
-\chapter{Evidence}
-\section{Attestations}
+\section{Evidence}
+\subsection{Attestations}
 
-Note: Listed below are only attestations in which Funatsu, the creator of the characters, was either not involved, or was not the lead author. If I were to include Funatsu's work this section could be neverending, but because the ISO P&P are about proving the existence of a user community, Funatsu's works aren't relevant for proving one.
+Note: Listed below are only attestations in which Funatsu, the creator of the characters, was either not involved, or was not the lead author. If I were to include Funatsu's work this subsection could be neverending, but because the ISO P&P are about proving the existence of a user community, Funatsu's works aren't relevant for proving one.
 
 \img[src=Tamaki2009.png, width=75%fw]
 
@@ -382,7 +364,7 @@ This cute cartoon is of a meeting of the Okinawan Speaker's Association (\cjk{�
 
 \noindent\font[size=0.6em]{\font[weight=700]{Figure №\Figure:counter}—Above newsletter, closeup of \Oki{歹} \font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WU}\bigskip}
 
-\section{Fonts}
+\subsection{Fonts}
 
 Many fonts have existed for writing this script. As it is not feasible for me to go back and research fonts used in the 80’s–00’s, listed here are only fonts publicly available for download as of 2021.
 
@@ -401,129 +383,12 @@ Many fonts have existed for writing this script. As it is not feasible for me to
 \noindent\center{\img[src=FK2.png, width=100%fw]}
 
 
-\chapter{Bibliography}
-\begin{listarea}
-\listitem{Emori, Yōkō [\cjk{江森 陽弘}] (1987-02-14). \cjk{\Href[src=http://www.wwq.jp/q/mojihyooka/emorig.gif]{独自の工夫で新しい沖縄文字を考案した船津好明さん}} [Uniquely developed “New Okinawan Kana” invented by a Mr. Yoshiaki Funatsu]. \em{Asahi Shimbun} (\cjk{朝日新聞}), \cjk{\hbox{ひと}} (series).}
-\listitem{Kuniyoshi, Shinshō [\cjk{國吉 眞正}]; Funatsu, Yoshiaki [\cjk{船津 好明}] (2009). \Href[src=http://www.wwq.jp/q/kashi/kaship17-33.pdf]{\cjk{現代仮名遣いで易しく読める}}\goodbreak\Href[src=http://www.wwq.jp/q/kashi/kaship17-33.pdf]{\cjk{沖縄の古典音楽歌詞118}} [118 Classical Okinawan Songs Made Easily Readable via Modern Kana]. Tokyo: Okinawa Language Education Institute [\cjk{沖縄語教育研究所}].}
-\listitem{Otsuka, Satoru [\cjk{大塚 聰}] (2010). \cjk{\Href[src=https://ameblo.jp/ssatoloux-1987/entry-10526258612.html]{アイヌ語用仮名文字：新沖縄文字}（拡張ひらがな・拡張\hbox{カタ}\hbox{カナ}・を探せ!!）} [Ainu Specialized Kana and New Okinawan Kana (hunting for extended hiragana/katakana!!)].}
-\listitem{Funatsu, Yoshiaki [\cjk{船津好明}] (2016). \Href[src=http://www.wwq.jp/q/mojiichiran.pdf]{\cjk{沖縄文字一覧}} [Okinawan Kana Chart].}
-\end{listarea}
-\define[command=book:chapter:pre:en]{Appendix }
-\define[command=tocentry]{}
-\script{
---SILE.call("increment-multilevel-counter", { id = "sectioning", level = 1 })
-local counter = { value= { 0 }, display= { "Alpha" }, format = SILE.formatMultilevelCounter }
-SILE.scratch.counters["sectioning"] = counter
-}
-\chapter{Alternative version of § Quick summary}
-
-I propose the encoding of 18 new hiragana letters, to be added to a new block, Kana Extended-C. There are no katakana versions of these letters. I only have evidence of the proposed letters in use to write the Central Okinawan language (\cjk{沖縄口}, \cjk{うちなあぐち}, [ʔut͡ɕinaːɡut͡ɕi]), although they may be used to write other languages in the Ryukyuan language family.
-
-Through adding U+3099 \font[features=+c2sc]{COMBINING KATAKANA-HIRAGANA VOICED SOUND MARK}, these characters represent all 27 of the letters known collectively in Japanese as the “New Okinawan Kana” (\cjk{新沖縄文字}). 23 of them have existed since 1986, with the remaining four having been created c. 2004. They are the creation of Dr. Yoshiaki Funatsu (\cjk{船津好明}; born 1936), a professor of statistics, applied mathematics and economics; he later in life became a linguist.
-
-Despite their novelty, these letters have seen quite wide use throughout Okinawa. I had no contact with Mr. Funatsu while writing this paper.
-
-I propose that the block Kana Extended-C be two columns wide, beginning at U+1AFD0 and extending until U+1AFEF, at which point it meets Kana Extended-B, which starts at U+1AFF0.
-
-\bigskip
-
-\section{UnicodeData.txt}
-
-\begin{verbatim}
-1AFD0;HIRAGANA LETTER NEW OKINAWAN TU;Lo;0;L;;;;;N;;;;;
-1AFD1;HIRAGANA LETTER NEW OKINAWAN TI;Lo;0;L;;;;;N;;;;;
-1AFD2;HIRAGANA LETTER NEW OKINAWAN KWA;Lo;0;L;;;;;N;;;;;
-1AFD3;HIRAGANA LETTER NEW OKINAWAN KWI;Lo;0;L;;;;;N;;;;;
-1AFD4;HIRAGANA LETTER NEW OKINAWAN KWE;Lo;0;L;;;;;N;;;;;
-1AFD5;HIRAGANA LETTER NEW OKINAWAN HWA;Lo;0;L;;;;;N;;;;;
-1AFD6;HIRAGANA LETTER NEW OKINAWAN HWI;Lo;0;L;;;;;N;;;;;
-1AFD7;HIRAGANA LETTER NEW OKINAWAN HWE;Lo;0;L;;;;;N;;;;;
-1AFD8;HIRAGANA LETTER NEW OKINAWAN YA;Lo;0;L;;;;;N;;;;;
-1AFD9;HIRAGANA LETTER NEW OKINAWAN YU;Lo;0;L;;;;;N;;;;;
-1AFDA;HIRAGANA LETTER NEW OKINAWAN YO;Lo;0;L;;;;;N;;;;;
-1AFDB;HIRAGANA LETTER NEW OKINAWAN WA;Lo;0;L;;;;;N;;;;;
-1AFDC;HIRAGANA LETTER NEW OKINAWAN WI;Lo;0;L;;;;;N;;;;;
-1AFDD;HIRAGANA LETTER NEW OKINAWAN WE;Lo;0;L;;;;;N;;;;;
-1AFDE;HIRAGANA LETTER NEW OKINAWAN N;Lo;0;L;;;;;N;;;;;
-1AFDF;HIRAGANA LETTER NEW OKINAWAN WU;Lo;0;L;;;;;N;;;;;
-1AFE0;HIRAGANA LETTER NEW OKINAWAN SI;Lo;0;L;;;;;N;;;;;
-1AFE1;HIRAGANA LETTER NEW OKINAWAN TSI;Lo;0;L;;;;;N;;;;;
-\end{verbatim}
-
-\section{Chart}
-
-\noindent\svg[src=oki2.svg, height=100%fh]
-\eject
-
-\frame[id=descs, top=top(content), left=25%pw, bottom=bottom(content), right=right(content)]
-\typeset-into[frame=descs]{
-\font[size=0.7em]{
-\table{
-\tr{\td{U+1AFD0}\td{\glue[width=0.25em]\Oki{婢}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TU}}}
-\tr{\td{}\td{}\td{ligature of \cjk{とぅ}}}
-\tr{\td{}\td{}\td{may receive \cjk{　゙} ⇒ \Oki{嬨}}}
-\tr{\td{U+1AFD1}\td{\glue[width=0.25em]\Oki{廒}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{てぃ}}}
-\tr{\td{}\td{}\td{may receive \cjk{　゙} ⇒ \Oki{廙}}}
-\tr{\td{U+1AFD2}\td{\glue[width=0.25em]\Oki{彩}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWA}}}
-\tr{\td{}\td{}\td{ligature of \cjk{くゎ}}}
-\tr{\td{}\td{}\td{may receive \cjk{　゙} ⇒ \Oki{徭}}}
-\tr{\td{U+1AFD3}\td{\glue[width=0.25em]\Oki{惘}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{くぃ}}}
-\tr{\td{}\td{}\td{may receive \cjk{　゙} ⇒ \Oki{慎}}}
-\tr{\td{U+1AFD4}\td{\glue[width=0.25em]\Oki{愈}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN KWE}}}
-\tr{\td{}\td{}\td{ligature of \cjk{くぇ}}}
-\tr{\td{}\td{}\td{may receive \cjk{　゙} ⇒ \Oki{憎}}}
-\tr{\td{U+1AFD5}\td{\glue[width=0.25em]\Oki{慠}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWA}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ふゎ}}}
-\tr{\td{U+1AFD6}\td{\glue[width=0.25em]\Oki{懲}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ふぃ}}}
-\tr{\td{U+1AFD7}\td{\glue[width=0.25em]\Oki{戴}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN HWE}}}
-\tr{\td{}\td{}\td{ligature of \cjk{ふぇ}}}
-\tr{\td{U+1AFD8}\td{\glue[width=0.25em]\Oki{揄}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YA}}}
-\tr{\td{}\td{}\td{→ \cjk{や}}}
-\tr{\td{U+1AFD9}\td{\glue[width=0.25em]\Oki{搜}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YU}}}
-\tr{\td{}\td{}\td{→ \cjk{ゆ}}}
-\tr{\td{U+1AFDA}\td{\glue[width=0.25em]\Oki{摒}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN YO}}}
-\tr{\td{}\td{}\td{→ \cjk{よ}}}
-\tr{\td{U+1AFDB}\td{\glue[width=0.25em]\Oki{敖}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WA}}}
-\tr{\td{}\td{}\td{no relationship to \font[family=UniHentaiKana]{𛃍} hentaigana letter mi-5}}
-\tr{\td{U+1AFDC}\td{\glue[width=0.25em]\Oki{晴}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WI}}}
-\tr{\td{}\td{}\td{→ \cjk{ゐ}}}
-\tr{\td{}\td{}\td{no relationship to \font[family=UniHentaiKana]{𛀌} hentaigana letter u-3}}
-\tr{\td{U+1AFDD}\td{\glue[width=0.25em]\Oki{朗}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WE}}}
-\tr{\td{}\td{}\td{→ \cjk{ゑ}}}
-\tr{\td{U+1AFDE}\td{\glue[width=0.25em]\Oki{望}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN N}}}
-\tr{\td{}\td{}\td{→ \cjk{ん}}}
-\tr{\td{U+1AFDF}\td{\glue[width=0.25em]\Oki{歹}\glue[width=0.25em]}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN WU}}}
-\tr{\td{}\td{}\td{ligature of \cjk{をぅ}}}
-\tr{\td{U+1AFE0}\td{\highlight[color=#b1e4f8]{\glue[width=0.25em]\Oki{流}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN SI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{すぃ}}}
-\tr{\td{}\td{}\td{may receive \cjk{　゙} ⇒ \Oki{滛}}}
-\tr{\td{U+1AFE1}\td{\highlight[color=#b1e4f8]{\glue[width=0.25em]\Oki{滋}\glue[width=0.25em]}}\td{\font[features=+c2sc]{HIRAGANA LETTER NEW OKINAWAN TSI}}}
-\tr{\td{}\td{}\td{ligature of \cjk{つぃ}}}
-\tr{\td{}\td{}\td{may receive \cjk{　゙} ⇒ \Oki{漢}}}
-}
-\noindent\par{}\highlight[color=#b1e4f8, margin=2px]{See § Infrequent disambiguation letters}
-}
-}
-
-\frame[id=descs, top=top(content), left=60%pw, bottom=bottom(content), right=right(content)]
-\typeset-into[frame=descs]{
-\font[size=0.7em]{
-\table{
-}
-\table{
-\tr{\td{U+3044 U+3099}\td{\highlight[color=#feaeae]{\glue[width=0.25em]\Oki{杖}\glue[width=0.25em]}}\td{\font[features=+c2sc]{N/A}}}
-\tr{\td{}\td{}\td{\cjk{＝} \cjk{い} + \cjk{　゙}}}
-\tr{\td{}\td{}\td{\cjk{＝} New Okinawan yi}}
-\tr{\td{U+3048 U+3099}\td{\highlight[color=#feaeae]{\glue[width=0.25em]\Oki{殺}\glue[width=0.25em]}}\td{\font[features=+c2sc]{N/A}}}
-\tr{\td{}\td{}\td{\cjk{＝} \cjk{え} + \cjk{　゙}}}
-\tr{\td{}\td{}\td{\cjk{＝} New Okinawan ye}}
-}
-\medskip
-\noindent\par{}\highlight[color=#feaeae, margin=2px]{See § Atomicity of \cjk{い゙} and \cjk{え゙}}
-}
-}
+\section{Bibliography}
+\begin{enumerate}
+\item{Emori, Yōkō [\cjk{江森 陽弘}] (1987-02-14). \cjk{\Href[src=http://www.wwq.jp/q/mojihyooka/emorig.gif]{独自の工夫で新しい沖縄文字を考案した船津好明さん}} [Uniquely developed “New Okinawan Kana” invented by a Mr. Yoshiaki Funatsu]. \em{Asahi Shimbun} (\cjk{朝日新聞}), \cjk{\hbox{ひと}} (series).}
+\item{Kuniyoshi, Shinshō [\cjk{國吉 眞正}]; Funatsu, Yoshiaki [\cjk{船津 好明}] (2009). \Href[src=http://www.wwq.jp/q/kashi/kaship17-33.pdf]{\cjk{現代仮名遣いで易しく読める}}\goodbreak\Href[src=http://www.wwq.jp/q/kashi/kaship17-33.pdf]{\cjk{沖縄の古典音楽歌詞118}} [118 Classical Okinawan Songs Made Easily Readable via Modern Kana]. Tokyo: Okinawa Language Education Institute [\cjk{沖縄語教育研究所}].}
+\item{Otsuka, Satoru [\cjk{大塚 聰}] (2010). \cjk{\Href[src=https://ameblo.jp/ssatoloux-1987/entry-10526258612.html]{アイヌ語用仮名文字：新沖縄文字}（拡張ひらがな・拡張\hbox{カタ}\hbox{カナ}・を探せ!!）} [Ainu Specialized Kana and New Okinawan Kana (hunting for extended hiragana/katakana!!)].}
+\item{Funatsu, Yoshiaki [\cjk{船津好明}] (2016). \Href[src=http://www.wwq.jp/q/mojiichiran.pdf]{\cjk{沖縄文字一覧}} [Okinawan Kana Chart].}
+\end{enumerate}
 \end{document}
 % vim: filetype=sile
