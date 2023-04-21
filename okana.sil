@@ -1,45 +1,5 @@
-\begin[class=book]{document}
-\script[src=packages/rules]
-\script[src=packages/lists]
-\script[src=packages/ptable]
-\script[src=packages/url]
-\script[src=packages/color]
-\script[src=highlight]
-\script[src=packages/date]
-\script{
-SILE.registerCommand('Href', function(options, content)
-    SILE.call("color", {color="#000099"}, function() SILE.call("href", options, content) end)
-end)
-SILE.registerCommand('Date', function(options, content)
-    local da = os.date(options.format, os.time())
-    da = da:gsub('^0', '')
-    SILE.typesetter:typeset(da)
-end)
-}
-\script[src=packages/features]
-\script[src=packages/frametricks]
-\script[src=packages/rotate]
-\script[src=packages/tate]
-\script[src=packages/rebox]
-\script[src=packages/font-fallback]
-\script[src=packages/ruby]
-\script[src=packages/linespacing]
-\script[src=packages/pullquote]
-\script[src=packages/unichar]
-\script[src=packages/pdf]
-\script[src=packages/svg]
-\script[src=packages/image]
-\script[src=packages/raiselower]
-\define[command=Figure:counter]{\increment-counter[id=figure]\show-counter[id=figure]}
-\define[command=Cell]{\cell{{\noindent{}\process}}}
+\begin[class=okana]{document}
 \language[main=en]
-\define[command=cjk]{\font[size=0.95em,family=Noto Serif CJK JP]{\process}}
-\define[command=mathfourtd]{\Cell{\font[family=MathJax_Size4]{\process}}}
-\define[command=nofoliosthispage]{\folios}
-\set[parameter=font.family,value=EB Garamond,makedefault=true]
-\set[parameter=font.size,value=12,makedefault=true]
-\define[command=footnote:font]{\font[size=0.6em]{\set[parameter=document.baselineskip,value=0.5ex]{\process\par}}}
-
 \font[size=24pt,weight=1000,features=+smcp]{
 \par\noindent\center{Proposal to encode \skip[height=0.333em] New Okinawan Kana \cjk{({\ruby[reading=しん]{新}\ruby[reading=おき]{沖}\ruby[reading=なわ]{縄}\ruby[reading=も]{文}\ruby[reading=じ]{字}})} \goodbreak in the UCS}}
 \bigskip
@@ -287,11 +247,11 @@ These letters are in all fonts I've seen which support this system, including Ni
 
 \noindent\center{\img[src=shimashotai.png, width=50%fw]}
 
-\par\em{Shima Shotai} (\cjk{しま\ruby[reading=しょ]{素}\ruby[reading=たい]{体}}) is an incompatible system presented by Shinji Ogawa (\cjk{\ruby[reading=お]{小}\ruby[reading=がわ]{川} \ruby[reading=しん]{晋}\ruby[reading=じ]{史}}), Masahiro Yamada (\cjk{\ruby[reading=やま]{山}\ruby[reading=だ]{田} \ruby[reading=まさ]{真}\ruby[reading=ひろ]{寛}}), Yuka Hayashi (\cjk{\ruby[reading=はやし]{林} \ruby[reading=ゆ]{由}\ruby[reading=か]{華}}), and Hiroto Ueda (\cjk{\ruby[reading=うえ]{上}\ruby[reading=だ]{田} \ruby[reading=ひろ]{寛}\ruby[reading=と]{人}}) at ATypI, the typography conference held by the Association Typographique Internationale, in 2019.\footnote{See \Href[src=https://shimanomoji.site/atypi.html]{\cjk{しまの文字}.site}. In the presentation, Ogawa mentions that \em{Shima Shotai} have existed since 2015, but I could not independently verify this.} It is for the representation of the Ryukyuan languages. I have not as yet been able to find enough community use of this neography to recommend formally the encoding of its characters. The encoding of the New Okinawan Kana does not preclude future encoding of the \em{Shima Shotai} system, should it be used more widely.
+\em{Shima Shotai} (\cjk{しま\ruby[reading=しょ]{素}\ruby[reading=たい]{体}}) is an incompatible system presented by Shinji Ogawa (\cjk{\ruby[reading=お]{小}\ruby[reading=がわ]{川} \ruby[reading=しん]{晋}\ruby[reading=じ]{史}}), Masahiro Yamada (\cjk{\ruby[reading=やま]{山}\ruby[reading=だ]{田} \ruby[reading=まさ]{真}\ruby[reading=ひろ]{寛}}), Yuka Hayashi (\cjk{\ruby[reading=はやし]{林} \ruby[reading=ゆ]{由}\ruby[reading=か]{華}}), and Hiroto Ueda (\cjk{\ruby[reading=うえ]{上}\ruby[reading=だ]{田} \ruby[reading=ひろ]{寛}\ruby[reading=と]{人}}) at ATypI, the typography conference held by the Association Typographique Internationale, in 2019.\footnote{See \Href[src=https://shimanomoji.site/atypi.html]{\cjk{しまの文字}.site}. In the presentation, Ogawa mentions that \em{Shima Shotai} have existed since 2015, but I could not independently verify this.} It is for the representation of the Ryukyuan languages. I have not as yet been able to find enough community use of this neography to recommend formally the encoding of its characters. The encoding of the New Okinawan Kana does not preclude future encoding of the \em{Shima Shotai} system, should it be used more widely.
 
-\par\indent{}Furthermore, there is no possibility of a name collision between the New Okinawan Kana and the \em{Shima Shotai}. The only characters missing for the \em{Shima Shotai} are some small versions of existing hiragana and katakana letters. These have a clear pattern by which their names are derived, and it is already known that they belong in the block Small Kana Extension, which has room to receive them. It is also possible some more diacritics are needed to represent the \em{Shima Shotai}, but there is also an obvious way to name these diacritics as they are very similar in appearance to Latin typograhical diacriics, and if new diacritics are needed, they wouldn't have any specific Script category.
+\indent{}Furthermore, there is no possibility of a name collision between the New Okinawan Kana and the \em{Shima Shotai}. The only characters missing for the \em{Shima Shotai} are some small versions of existing hiragana and katakana letters. These have a clear pattern by which their names are derived, and it is already known that they belong in the block Small Kana Extension, which has room to receive them. It is also possible some more diacritics are needed to represent the \em{Shima Shotai}, but there is also an obvious way to name these diacritics as they are very similar in appearance to Latin typograhical diacriics, and if new diacritics are needed, they wouldn't have any specific Script category.
 
-\par{}While the authors of the \em{Shima Shotai} stated in 2019 that their top priority was being encoded in Unicode, no proposal has been submited as of the date of this paper. Nonetheless, I am confident that the encoding of my requested characters would do nothing to hinder a possible future encoding of theirs should adequate third-party use of their \em{Shima Shotai} system be documented.
+While the authors of the \em{Shima Shotai} stated in 2019 that their top priority was being encoded in Unicode, no proposal has been submited as of the date of this paper. Nonetheless, I am confident that the encoding of my requested characters would do nothing to hinder a possible future encoding of theirs should adequate third-party use of their \em{Shima Shotai} system be documented.
 
 \section{Evidence}
 \subsection{Attestations}
