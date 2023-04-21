@@ -29,7 +29,6 @@ function class:_init (options)
   self:loadPackage("svg")
   self:loadPackage("image")
   self:loadPackage("raiselower")
-  self:loadPackage("tableofcontents")
 
   self:registerPostinit(function(_)
     self:loadPackage("ruby")
