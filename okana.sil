@@ -1,54 +1,5 @@
-\begin[class=book]{document}
-\use[module=lists]
-\use[module=packages.rules]
-\use[module=packages.url]
-\use[module=packages.color]
-\use[module=highlight]
-\use[module=packages.date]
-\begin{lua}
-  SILE.use("packages.simpletable", {
-    tableTag = "table",
-    trTag = "tr",
-    tdTag = "td"
-  })
-
-  SILE.registerCommand('Href', function(options, content)
-    SILE.call("color", {color="#000099"}, function()
-      SILE.call("href", options, content)
-    end)
-  end)
-
-  SILE.registerCommand('Date', function(options, content)
-    local da = os.date(options.format, os.time())
-    da = da:gsub('^0', '')
-    SILE.typesetter:typeset(da)
-  end)
-\end{lua}
-\use[module=packages.features]
-\use[module=packages.frametricks]
-\use[module=packages.rotate]
-\use[module=packages.tate]
-\use[module=packages.rebox]
-\use[module=packages.ruby]
-\define[command=ruby:font]{\font[family=Noto Serif CJK JP,weight=900,size=0.5em]}
-\use[module=packages.linespacing]
-\use[module=packages.pullquote]
-\use[module=packages.unichar]
-\use[module=packages.pdf]
-\use[module=packages.svg]
-\use[module=packages.image]
-\use[module=packages.raiselower]
-\use[module=packages.tableofcontents]
-\define[command=Figure:counter]{\increment-counter[id=figure]\show-counter[id=figure]}
+\begin[class=okana]{document}
 \language[main=en]
-\define[command=cjk]{\font[size=0.95em,family=Noto Serif CJK JP]{\process}}
-\define[command=mathfourtd]{\td{\font[family=MathJax_Size4]{\process}}}
-\define[command=nofoliosthispage]{\folios}
-\set[parameter=font.family,value=EB Garamond,makedefault=true]
-\set[parameter=font.size,value=12,makedefault=true]
-\define[command=footnote:font]{\font[size=0.6em]{\set[parameter=document.baselineskip,value=0.5ex]{\process\par}}}
-\set[parameter=ruby.height, value=2em]
-
 \font[size=24pt,weight=1000,features=+smcp]{
 \par\noindent\center{Proposal to encode \skip[height=0.333em] New Okinawan Kana \cjk{({\ruby[reading=しん]{新}\ruby[reading=おき]{沖}\ruby[reading=なわ]{縄}\ruby[reading=も]{文}\ruby[reading=じ]{字}})} \goodbreak in the UCS}}
 \bigskip
