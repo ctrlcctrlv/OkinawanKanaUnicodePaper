@@ -5,22 +5,25 @@
 \use[module=packages.color]
 \use[module=highlight]
 \use[module=packages.date]
-\script{
-SILE.use("packages/simpletable", {
- tableTag = "table",
- trTag = "tr",
- tdTag = "td"
-})
+\begin{lua}
+  SILE.use("packages.simpletable", {
+    tableTag = "table",
+    trTag = "tr",
+    tdTag = "td"
+  })
 
-SILE.registerCommand('Href', function(options, content)
-    SILE.call("color", {color="#000099"}, function() SILE.call("href", options, content) end)
-end)
-SILE.registerCommand('Date', function(options, content)
+  SILE.registerCommand('Href', function(options, content)
+    SILE.call("color", {color="#000099"}, function()
+      SILE.call("href", options, content)
+    end)
+  end)
+
+  SILE.registerCommand('Date', function(options, content)
     local da = os.date(options.format, os.time())
     da = da:gsub('^0', '')
     SILE.typesetter:typeset(da)
-end)
-}
+  end)
+\end{lua}
 \use[module=packages.features]
 \use[module=packages.frametricks]
 \use[module=packages.rotate]
