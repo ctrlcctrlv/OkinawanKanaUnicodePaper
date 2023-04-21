@@ -1,10 +1,10 @@
 \begin[class=book]{document}
-\script[src=lists]
-\script[src=packages/rules]
-\script[src=packages/url]
-\script[src=packages/color]
-\script[src=highlight]
-\script[src=packages/date]
+\use[module=lists]
+\use[module=packages.rules]
+\use[module=packages.url]
+\use[module=packages.color]
+\use[module=highlight]
+\use[module=packages.date]
 \script{
 SILE.use("packages/simpletable", {
  tableTag = "table",
@@ -21,21 +21,21 @@ SILE.registerCommand('Date', function(options, content)
     SILE.typesetter:typeset(da)
 end)
 }
-\script[src=packages/features]
-\script[src=packages/frametricks]
-\script[src=packages/rotate]
-\script[src=packages/tate]
-\script[src=packages/rebox]
-\script[src=packages/ruby]
+\use[module=packages.features]
+\use[module=packages.frametricks]
+\use[module=packages.rotate]
+\use[module=packages.tate]
+\use[module=packages.rebox]
+\use[module=packages.ruby]
 \define[command=ruby:font]{\font[family=Noto Serif CJK JP,weight=900,size=0.5em]}
-\script[src=packages/linespacing]
-\script[src=packages/pullquote]
-\script[src=packages/unichar]
-\script[src=packages/pdf]
-\script[src=packages/svg]
-\script[src=packages/image]
-\script[src=packages/raiselower]
-\script[src=packages/tableofcontents]
+\use[module=packages.linespacing]
+\use[module=packages.pullquote]
+\use[module=packages.unichar]
+\use[module=packages.pdf]
+\use[module=packages.svg]
+\use[module=packages.image]
+\use[module=packages.raiselower]
+\use[module=packages.tableofcontents]
 \define[command=Figure:counter]{\increment-counter[id=figure]\show-counter[id=figure]}
 \language[main=en]
 \define[command=cjk]{\font[size=0.95em,family=Noto Serif CJK JP]{\process}}
